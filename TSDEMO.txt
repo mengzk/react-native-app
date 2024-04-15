@@ -1,0 +1,43 @@
+
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
+
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
+
+function Section({children, title}: SectionProps): JSX.Element {
+  return (
+    <View style={styles.sectionContainer}>
+      <Text> {title} </Text>
+      {children}
+    </View>
+  );
+}
+
+function App(): JSX.Element {
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <Section title="See Your Changes">
+        <ReloadInstructions />
+      </Section>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+});
+
+export default App;
