@@ -114,7 +114,7 @@ export default class Picker extends React.Component {
           style={styles.scroll(row_num)}
           bounces={false}
           snapToInterval={item_height}
-          scrollEventThrottle={18}
+          scrollEventThrottle={50}
           onScroll={this.onScrolling}
           onMomentumScrollEnd={this.onScrollEnd}
           showsVerticalScrollIndicator={false}>
@@ -134,7 +134,7 @@ export default class Picker extends React.Component {
     // const diff2 = diff * diff;
     // const transform = [{ scale: 1 - 0.01 * diff }, { rotateX: `${diff * 3}deg` }];
     const transform = [{ rotateX: `${diff * 3}deg` }];
-    const opacity = 1 - 0.1 * diff;
+    const opacity = 1 - 0.12 * diff;
     const fontSize = 18 - Math.abs(curIndex - index);
     let value = null;
     if (typeof item == 'string' || typeof item == 'number') {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   value: {
     textAlign: 'center',
-    color: '#323232',
+    color: '#535353',
     fontSize: 17,
   },
   value2: {
