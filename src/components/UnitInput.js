@@ -4,10 +4,10 @@
  * Desc:
  */
 import React, { useState } from 'react';
-import { View, Text, TextInput, TextInputProps, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const unitTexts = ['', '个', '十', '百', '千', '万', '十万', '百万', '千万', '亿', '十亿', '百亿', '千亿', '无敌', '牛皮']
-const UnitInput = (props) => {
+const unitTexts = ['', '个', '十', '百', '千', '万', '十万', '百万', '千万', '亿', '十亿', '百亿', '千亿']
+function UnitInput(props) {
   const [show, setShow] = useState(false);
   const [unit, setunit] = useState('');
   function onChangeText(e) {

@@ -6,6 +6,8 @@
 
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
+
 import {Header, CompatButton, ListView} from '../../components/index';
 
 const list = [
@@ -25,9 +27,7 @@ class Home extends React.PureComponent {
     this.state = {};
   }
 
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
 
   onItemPress = (item, index) => {
     let path = '';
@@ -35,6 +35,7 @@ class Home extends React.PureComponent {
     switch (index) {
       case 0:
         path = '';
+        this.openPicker();
         break;
       case 1:
         path = 'WebPage';
@@ -43,12 +44,33 @@ class Home extends React.PureComponent {
         path = '';
         break;
     }
+
+    this.openPicker();
+
     if (path) {
       this.props.navigation.navigate({
         name: path,
         params: {item},
       });
     }
+  };
+
+  openPicker = () => {
+    console.log('openPicker');
+    ImagePicker.openCamera({
+      compressImageMaxWidth: 1080,
+      compressImageMaxHeight: 1928,
+      width: 1080,
+      height: 1928,
+      mediaType: 'photo',
+      maxFiles: 1,
+    })
+      .then(image => {
+        console.log(image);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
