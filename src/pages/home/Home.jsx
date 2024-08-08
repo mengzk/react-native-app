@@ -35,7 +35,6 @@ class Home extends React.PureComponent {
     switch (index) {
       case 0:
         path = '';
-        this.openPicker();
         break;
       case 1:
         path = 'WebPage';
@@ -45,13 +44,13 @@ class Home extends React.PureComponent {
         break;
     }
 
-    this.openPicker();
-
     if (path) {
       this.props.navigation.navigate({
         name: path,
         params: {item},
       });
+    }else {
+      this.openPicker();
     }
   };
 
@@ -67,10 +66,12 @@ class Home extends React.PureComponent {
     })
       .then(image => {
         console.log(image);
+        
       })
       .catch(err => {
         console.log(err);
       });
+      console.log(image2);
   };
 
   render() {
