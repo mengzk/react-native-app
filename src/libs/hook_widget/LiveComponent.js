@@ -65,14 +65,14 @@ export default class LiveComponent extends React.Component {
   }
 
   render() {
-    const children = this.props.children;
+    const childrenRender = this.props.render;
 
-    if (typeof children == 'function') {
+    if (childrenRender) {
       // 函数式组件
-      return children();
+      return childrenRender(this._liveModel);
     } else {
       // 类组件
-      return children;
+      return this.props.children;
     }
   }
 }

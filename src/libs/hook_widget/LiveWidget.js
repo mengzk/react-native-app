@@ -7,7 +7,7 @@
 // eslint-disable-next-line
 import React, { useEffect, useState } from "react";
 
-const HooksWidget = (props) => {
+const LiveWidget = (props) => {
   const data = props.data.value;
 
   const [value, setValue] = useState(data);
@@ -25,4 +25,4 @@ const HooksWidget = (props) => {
   return props.child(value);
 }
 
-export default HooksWidget;
+export default LiveWidget;

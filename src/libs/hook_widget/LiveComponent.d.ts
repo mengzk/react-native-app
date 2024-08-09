@@ -9,11 +9,8 @@ import LiveModel from "./LiveModel";
 
 interface LiveComponentProps {
   liveModel: LiveModel;
-  children:
-    | React.ReactNode[]
-    | React.ReactNode
-    | React.DetailedHTMLProps<any, any>[]
-    | React.DetailedHTMLProps<any, any>;
+  children?: Array<React.ReactNode> | React.ReactNode;
+  render?: (model: LiveModel) => Array<React.ReactNode> | React.ReactNode;
 }
 
 declare class LiveComponent extends React.Component<LiveComponentProps> {}
