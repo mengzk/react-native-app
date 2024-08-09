@@ -4,7 +4,6 @@
  * Desc: 网络请求封装类
  */
 
-// import { network } from './fetch';
 import {network, parseError} from './axios';
 import {getRequestHost, mergeHeaders, mergeParams} from './config';
 
@@ -17,7 +16,7 @@ export function request({
   data = {},
   headers = {},
   responseType = 'json',
-  host = 'def',
+  host = '',
   env = '',
   isLoading = true,
   loadingText = '加载中...',

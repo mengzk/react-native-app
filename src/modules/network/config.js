@@ -5,10 +5,8 @@
  */
 import app_config from '../constant/index'
 
-// 常量配置
-// export const net_config = {env: app_config.def_env}
-
-export function getRequestHost(host='def', env=app_config.env) {
+// 获取环境域名
+export function getRequestHost(host='api', env=app_config.env) {
   return env_hosts[env][host];
 }
 
@@ -24,17 +22,17 @@ export function mergeHeaders(headers={}) {
 
 const env_hosts =  {
   prod: {
-    def: 'http://def.com',
+    api: 'http://def.com',
     auth: 'http://auth.com',
     order: 'http://order.com',
   },
   test: {
-    def: 'http://def-test.com',
+    api: 'http://def-test.com',
     auth: 'http://auth-test.com',
     order: 'http://order-test.com',
   },
   dev: {
-    def: 'http://def-test.com',
+    api: 'http://def-test.com',
     auth: 'http://auth-test.com',
     order: 'http://order-test.com',
   }
