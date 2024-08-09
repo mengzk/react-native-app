@@ -131,7 +131,7 @@ class AppExceptionHandler() : Thread.UncaughtExceptionHandler {
             var path = ""
 
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-                path = Environment.getExternalStorageDirectory().absolutePath + "/CrashLog"
+                path = Environment.getExternalStorageDirectory().absolutePath + "/CrashLogs"
             } else {
                 if (context != null) {
                     path = context!!.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)!!.absolutePath + "/CrashLog"
