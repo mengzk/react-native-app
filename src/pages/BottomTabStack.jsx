@@ -5,7 +5,7 @@
  */
  import React from 'react';
  import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
- import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
  
  import { Home, Project, My } from './index';
  

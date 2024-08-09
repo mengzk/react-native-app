@@ -71,7 +71,6 @@ class Home extends React.PureComponent {
       .catch(err => {
         console.log(err);
       });
-      console.log(image2);
   };
 
   render() {
