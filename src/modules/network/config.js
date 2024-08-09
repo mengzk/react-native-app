@@ -1,6 +1,6 @@
 /**
  * Author: Meng
- * Date: 2022-03
+ * Date: 2024-08-10
  * Desc: 请求配置
  */
 import app_config from '../constant/index'

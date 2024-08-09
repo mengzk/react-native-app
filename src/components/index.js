@@ -1,6 +1,6 @@
 /**
  * Author: Meng
- * Date: 2021-09-29
+ * Date: 2024-08-10
  * Desc: 全局公共组件
  */
 export {default as CharBar} from './charbar/CharBar';

@@ -1,6 +1,6 @@
 /**
  * Author: Meng
- * Date: 2021-09-27
+ * Date: 2024-08-10
  * Desc: 基础能力(硬件，系统)API
  */
 import { StatusBar, Alert, Platform, Linking, Dimensions, DeviceEventEmitter } from 'react-native';
