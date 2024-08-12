@@ -6,7 +6,6 @@
 
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
 
 import {Header, CompatButton, ListView} from '../../components/index';
 
@@ -56,21 +55,6 @@ class Home extends React.PureComponent {
 
   openPicker = () => {
     console.log('openPicker');
-    ImagePicker.openCamera({
-      compressImageMaxWidth: 1080,
-      compressImageMaxHeight: 1928,
-      width: 1080,
-      height: 1928,
-      mediaType: 'photo',
-      maxFiles: 1,
-    })
-      .then(image => {
-        console.log(image);
-        
-      })
-      .catch(err => {
-        console.log(err);
-      });
   };
 
   render() {
