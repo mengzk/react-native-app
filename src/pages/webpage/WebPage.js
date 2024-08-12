@@ -21,7 +21,7 @@ import { handlerWebMessage, parseWebEvent } from './bridge/index';
 import { Header, SharePop } from './component/index';
 import emit_keys from './constants/index';
 
-import Images from '../../assets/Images';
+import Images from '../../assets/imgs';
 
 // 绑定 window.postMessage
 const injectedJavaScript = `window.postMessage = function(data) {window.ReactNativeWebView.postMessage(data);}`;

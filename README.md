@@ -28,10 +28,12 @@
 │   └── index.js
 ├── modules                       模块
 │   ├── apis
+│   ├── bluetooth
 │   ├── event
+│   ├── location
 │   ├── native
 │   ├── network
-│   ├── parse
+│   ├── sensor
 │   └── index.js
 ├── pages                         页面
 │   ├── ActionType.js

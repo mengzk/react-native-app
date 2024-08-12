@@ -6,7 +6,15 @@
 
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import Configs from '../config/index'
+
 const Launch = () => {
+  let {top, bottom} = useSafeAreaInsets(); // 安全区域
+  Configs.screen.top = top;
+  Configs.screen.bottom = bottom;
+
   return (
     <View style={styles.container}>
       {/* <Image source={require('../../assets/launch.jpg')} /> */}
@@ -20,6 +28,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f60'
+    backgroundColor: '#f60',
   },
 });

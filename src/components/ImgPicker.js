@@ -10,7 +10,7 @@ import { Toast } from 'react-native-bnq-app-framework';
 import { ImagePreviewModal } from "bnq-ui";
 import ImagePicker from 'react-native-image-crop-picker';
 
-import { CommonAsset } from '../../Assets/index';
+import { CommonAsset } from '../../sssets/index';
 import { BnqRouter } from 'Project/BCore/Utils/RouterUtils';
 import UserStorage from '../../BCore/Utils/StorageModule/UserStorage';
 

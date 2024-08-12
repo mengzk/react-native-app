@@ -21,10 +21,10 @@ const Configs = {
   screen: {
     width,
     height,
-    scale,
-    fontScale,
-    bottom: 0,
-    top: 0,
+    scale, // 屏幕分辨率
+    fontScale, // 字体缩放比例
+    bottom: 0, // 底部安全区域
+    top: 0, // 顶部安全区域
   },
 };
 
