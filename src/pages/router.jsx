@@ -7,15 +7,11 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabStack from './BottomTabStack';
 
+import {LogPage, LogDetailPage, PanelPage} from './debug/index';
 import {NewProject, WebPage, TestPage} from './index';
 import Launcher from './Launch';
-import AddRecord from './home/test/AddRecord';
-import RetailSalesData from './home/test/RetailSalesData';
-
-import AnimatedClass from './project/Animated';
 
 const StackView = createNativeStackNavigator();
-
 const AppStackNavigator = () => {
   return (
     <StackView.Navigator
@@ -30,9 +26,11 @@ const AppStackNavigator = () => {
       <StackView.Screen name="NewProject" component={NewProject} />
       <StackView.Screen name="WebPage" component={WebPage} />
       <StackView.Screen name="TestPage" component={TestPage} />
-      <StackView.Screen name="AddRecord" component={AddRecord} />
-      <StackView.Screen name="RetailSalesData" component={RetailSalesData} />
-      <StackView.Screen name="AnimatedClass" component={AnimatedClass} />
+
+      {/* 调试 */}
+      <StackView.Screen name="LogPage" component={LogPage} />
+      <StackView.Screen name="LogDetailPage" component={LogDetailPage} />
+      <StackView.Screen name="PanelPage" component={PanelPage} />
     </StackView.Navigator>
   );
 };

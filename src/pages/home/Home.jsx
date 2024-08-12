@@ -10,7 +10,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Header, CompatButton, ListView} from '../../components/index';
 
 const list = [
-  '自定义标题栏',
+  '调试面板',
   'WebPage',
   'Charbar(字母索引)',
   'MoveView',
@@ -33,7 +33,7 @@ class Home extends React.PureComponent {
 
     switch (index) {
       case 0:
-        path = '';
+        path = 'PanelPage';
         break;
       case 1:
         path = 'WebPage';
