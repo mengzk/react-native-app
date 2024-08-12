@@ -5,7 +5,7 @@
  */
 import {StyleSheet} from 'react-native';
 
-const Styles = StyleSheet.create({
+const CusStyle = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -13,4 +13,4 @@ const Styles = StyleSheet.create({
   },
 });
 
-export default Styles;
+export default CusStyle;

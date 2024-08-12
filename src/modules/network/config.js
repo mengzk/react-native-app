@@ -3,10 +3,10 @@
  * Date: 2024-08-10
  * Desc: 请求配置
  */
-import app_config from '../constant/index'
+import configs from '../../config/index'
 
 // 获取环境域名
-export function getRequestHost(host='api', env=app_config.env) {
+export function getRequestHost(host='api', env=configs.env) {
   return env_hosts[env][host];
 }
 
