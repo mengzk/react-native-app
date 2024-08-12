@@ -1,7 +1,7 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc:
+ * Desc: 启动页
  */
 
 import React from 'react';
@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#f60'
   },
 });

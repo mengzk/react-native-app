@@ -1,7 +1,7 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc:
+ * Desc: 路由导航
  */
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';

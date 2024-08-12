@@ -1,7 +1,7 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc:
+ * Desc: 底部导航栏
  */
  import React from 'react';
  import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

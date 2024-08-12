@@ -1,7 +1,7 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc:
+ * Desc: 页面导出文件
  */
 
 export {default as Home} from './home/Home';
