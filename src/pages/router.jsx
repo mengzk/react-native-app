@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabStack from './BottomTabStack';
 
 import {NewProject, WebPage, TestPage} from './index';
+import Launcher from './Launch';
 import AddRecord from './home/test/AddRecord';
 import RetailSalesData from './home/test/RetailSalesData';
 
@@ -24,6 +25,7 @@ const AppStackNavigator = () => {
         //  console.log(res?.navigation);
         return res;
       }}>
+      <StackView.Screen name="Launch" component={Launcher} />
       <StackView.Screen name="Main" component={BottomTabStack} />
       <StackView.Screen name="NewProject" component={NewProject} />
       <StackView.Screen name="WebPage" component={WebPage} />

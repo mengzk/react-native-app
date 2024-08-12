@@ -4,20 +4,33 @@
  * Desc: 启动页
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import Configs from '../config/index'
+import Configs from '../config/index';
 
-const Launch = () => {
+const Launch = (props) => {
   let {top, bottom} = useSafeAreaInsets(); // 安全区域
-  Configs.screen.top = top;
-  Configs.screen.bottom = bottom;
+
+  useEffect(() => {
+    if (top > 0) {
+      Configs.screen.top = top;
+    }
+    if (bottom > 0) {
+      Configs.screen.bottom = bottom;
+    }
+    console.log('-----> screen: ', Configs.screen);
+    const timer = setTimeout(() => {
+      clearTimeout(timer);
+      props.navigation.navigate('Main');
+    }, 1000);
+  }, []);
 
   return (
     <View style={styles.container}>
       {/* <Image source={require('../../assets/launch.jpg')} /> */}
+      <Text>启动中...</Text>
     </View>
   );
 };
@@ -28,6 +41,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f60',
   },
 });

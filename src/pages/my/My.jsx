@@ -7,7 +7,7 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import { CompatButton } from '../../components';
-import { LiveComponent, HooksWidget} from '../../libs/hook_widget/index'
+import { LiveComponent, LiveWidget} from '../../libs/hook_widget/index'
 import MyModel from './MyModel';
 
 export default class My extends LiveComponent {
@@ -27,7 +27,7 @@ export default class My extends LiveComponent {
     return (
       <View style={styles.container}>
         <Text>个人中心😯</Text>
-        <HooksWidget data={this.liveModel.curDate} child={this.dateView}/>
+        <LiveWidget data={this.liveModel.curDate} child={this.dateView}/>
         {this.dateView()}
       </View>
     );

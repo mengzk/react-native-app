@@ -24,7 +24,7 @@ const App = () => {
     <NavigationContainer
       onStateChange={state => {
         const route = getRoute(state.routes[state.index]);
-        console.log('App.js Log:', route);
+        console.log('App onStateChange Log:', route);
         delete route.params;
         DeviceEventEmitter.emit('app_route_change', route);
       }}>
