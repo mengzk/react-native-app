@@ -5,24 +5,41 @@
  * Desc: 调试页面
  * 注意：!!! 这只是一个开发调试入口，项目上线要关闭 !!!
  */
-import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter} from 'react-native';
 
-const DebugBox = () => {
+import Configs from '../../config';
+
+function DebugBox() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const emitter = DeviceEventEmitter.addListener('app-debug', (data) => {
+      setVisible(data);
+    });
+
+    return () => {
+      emitter.remove();
+    };
+  }, []);
 
   function onPress() {
     console.log('DebugBox onPress');
     // props.navigate('PanelPage');
   }
 
-  return (
-    <View style={styles.page}>
-      <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-        <Text style={styles.debug}>Debug</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+  if (Configs.debug || visible) {
+    return (
+      <View style={styles.page}>
+        <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+          <Text style={styles.debug}>Debug</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  } else {
+    return <></>;
+  }
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -43,4 +60,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default DebugBox;
+export default React.memo(DebugBox);

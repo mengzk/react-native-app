@@ -5,6 +5,7 @@
  */
 
 const Images = {
+  launch: require('./img/launch.png'),
   left_b: require('./img/left_ic_b.png'),
   left_w: require('./img/left_ic_w.png'),
   tab_nav: require('./img/tab_nav_on.png'),

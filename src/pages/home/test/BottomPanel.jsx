@@ -16,7 +16,6 @@ import {
   Modal,
   Text,
   Image,
-  TextInput,
   FlatList,
   TouchableOpacity,
   StyleSheet,
@@ -87,7 +86,7 @@ function BottomPanel(props, ref) {
           <TouchableOpacity
             style={styles.close}
             onPress={() => setVisible(false)}>
-            <Image style={styles.closeIc} />
+            {/* <Image style={styles.closeIc} /> */}
           </TouchableOpacity>
         </View>
         <FlatList
