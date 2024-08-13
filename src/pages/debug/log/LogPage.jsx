@@ -10,10 +10,10 @@ import {View, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
 let lastTime = 0;
 const LogPage = props => {
   const list = [
-    {method: 'GET', status: 0, time: 0, url: 'http://bing.com/erwe/weq/ewqew/qrtertwerwwe/q/ewq/we/q/weq/we/qe/q', params: {}},
-    {method: 'POST', status: 1, time: 0, url: 'http://bing.com/eqwrqweqweqe/we/qwerwerwerw/weq/we/qe/q', params: {}},
-    {method: 'GET', status: 0, time: 0, url: 'http://bing.com/ererqerqweqweqewq/wewwerwrqrwerwe/q/weq/we/qe/q', params: {}},
-    {method: 'GET', status: 0, time: 0, url: 'http://bing.com/asdasdaq/ewqew/qasasdwe/ewrwetq/ewq/we/q/weq/we/qe/q', params: {}},
+    {method: 'GET', status: 200, time: 0, url: 'http://bing.com/erwe/weq/ewqew/qrtertwerwwe/q/ewq/we/qweq/weqeq', params: {}},
+    {method: 'POST', status: 401, time: 0, url: 'http://bing.com/eqwrqweqweqe/we/qwerwerwerw/weqwe/qeq?wded=121231', params: {}},
+    {method: 'GET', status: 500, time: 0, url: 'http://bing.com/ererqerqweqweqewq/wewwerwrqrwerwe/q/weqwe/qeq', params: {}},
+    {method: 'GET', status: 405, time: 0, url: 'http://bing.com/asdasdaq/ewqew/qasasdwe/ewrwetq/ewq/we/q/weq/we/qe/q', params: {}},
   ];
 
   function onBack() {
@@ -26,22 +26,25 @@ const LogPage = props => {
       return;
     }
     lastTime = now;
-    console.log('onPress', item);
+    // console.log('onPress', item);
+    props.navigation.navigate('LogDetailPage', {item});
   }
 
   function renderItem({item, index}) {
     const metStyle = item.method === 'GET' ? styles.method : styles.method2;
+    const paths = (item.url||'/').split('/');
+    const path = paths.slice(paths.length - 2).join('/');
     return (
       <TouchableOpacity
         key={index}
         style={styles.item}
-        activeOpacity={0.7}
+        activeOpacity={0.8}
         onPress={() => onPress(item)}>
         <View style={styles.staBox}>
           <Text style={metStyle}>{item.method}</Text>
           <Text style={styles.status}>{item.status}</Text>
         </View>
-        <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail"><Text style={styles.time}>{item.time}S</Text> {item.url}</Text>
+        <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail"><Text style={styles.time}>{item.time}s</Text> {path}</Text>
       </TouchableOpacity>
     );
   }
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f3f3',
   },
   header: {
-    height: 56,
+    height: 50,
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   item: {
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 16,
     marginBottom: 1,
     backgroundColor: 'white',
@@ -105,12 +108,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   method: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#232323',
     fontWeight: 'bold',
   },
   method2: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#FF6600',
     fontWeight: 'bold',
   },
@@ -122,12 +125,12 @@ const styles = StyleSheet.create({
   url: {
     flex: 1,
     fontSize: 16,
-    color: '#232323',
+    color: '#323232',
     marginLeft: 6,
   },
   time: {
     fontSize: 16,
-    color: '#006699',
+    color: '#0033FF',
   },
 });
 export default LogPage;

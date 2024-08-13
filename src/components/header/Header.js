@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   box: {
     width: '100%',
     maxWidth: '100%',
-    height: 48,
+    height: 50,
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   back: {
-    height: 48,
+    height: 50,
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',

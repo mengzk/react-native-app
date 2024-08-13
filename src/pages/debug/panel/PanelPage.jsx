@@ -2,7 +2,7 @@
  * Author: Meng
  * Date: 2024-08-12
  * Modify: 2024-08-12
- * Desc: 调试面板
+ * Desc: 调试面板 -Model显示
  */
 import React from 'react';
 import {View, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f3f3',
   },
   header: {
-    height: 56,
+    height: 50,
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
