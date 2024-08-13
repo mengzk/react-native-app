@@ -7,3 +7,4 @@
 
 import './common/index';
 import './custom/index';
+import './size/index';
