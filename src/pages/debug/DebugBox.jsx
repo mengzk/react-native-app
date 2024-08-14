@@ -5,16 +5,24 @@
  * Desc: 调试页面
  * 注意：!!! 这只是一个开发调试入口，项目上线要关闭 !!!
  */
-import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  DeviceEventEmitter,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import Configs from '../../config';
 
 function DebugBox() {
+  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const emitter = DeviceEventEmitter.addListener('app-debug', (data) => {
+    const emitter = DeviceEventEmitter.addListener('app-debug', data => {
       setVisible(data);
     });
 
@@ -24,8 +32,7 @@ function DebugBox() {
   }, []);
 
   function onPress() {
-    console.log('DebugBox onPress');
-    // props.navigate('PanelPage');
+    navigation.navigate('PanelPage');
   }
 
   if (Configs.debug || visible) {
@@ -50,13 +57,13 @@ const styles = StyleSheet.create({
     height: 20,
     zIndex: 1000,
     transform: [{rotate: '45deg'}, {translateX: 15}, {translateY: -8}],
-    backgroundColor: 'rgba(255,160,0,0.7)',
-    justifyContent: 'center',
+    backgroundColor: 'rgba(255,0,0,0.8)',
   },
   debug: {
-    fontSize: 14,
+    lineHeight: 20,
+    fontSize: 13,
+    color: 'white',
     fontWeight: 'bold',
-    color: 'red',
     textAlign: 'center',
   },
 });

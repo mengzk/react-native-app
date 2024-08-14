@@ -11,7 +11,7 @@ export default class NoRequest {
 
   def_env = 'env';
   def_host = 'def';
-  env_hosts = { prod: {}, test: {}, uat: {}, dev: {} };
+  env_domain = { prod: {}, test: {}, uat: {}, dev: {} };
 
   network = null;
   interceptor = null;
@@ -31,7 +31,7 @@ export default class NoRequest {
 
     this._showLoading(loading, loadingText); // 加载框
 
-    const rhost = this._getRequestHost(host || this.def_host, env || this.def_env);
+    const rhost = this._getTagDomain(host || this.def_host, env || this.def_env);
 
     const url2 = `${rhost}${url}`;
     let data2 = null;
@@ -52,7 +52,7 @@ export default class NoRequest {
       // 请求结构封装
       const result = { code: -1, data: '', message: '' };
       if (!rhost) {
-        console.error('请配置请求域名！new NoRequest({env_hosts: "项目请求的域名"})');
+        console.error('请配置请求域名！new NoRequest({env_domain: "项目请求的域名"})');
         resolve(result);
         return;
       }
@@ -86,8 +86,8 @@ export default class NoRequest {
   }
 
 
-  _getRequestHost(host = 'def', env = 'prod') {
-    const envObj = this.env_hosts[env];
+  _getTagDomain(host = 'def', env = 'prod') {
+    const envObj = this.env_domain[env];
     const hasHost = Object.hasOwnProperty.call(envObj, host);
     return hasHost ? envObj[host] : '';
   }

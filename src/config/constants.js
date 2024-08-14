@@ -18,20 +18,17 @@ export async function initDeviceInfo(top = 0, bottom = 0) {
   DEVICE.deviceId = DeviceInfo.getDeviceId();
   DEVICE.bundleId = DeviceInfo.getBundleId();
   DEVICE.version = DeviceInfo.getVersion();
-  DEVICE.tablet = DeviceInfo.isTablet();
-
+  // DEVICE.tablet = DeviceInfo.isTablet();
   DEVICE.deviceName = await DeviceInfo.getDeviceName();
-  DEVICE.ipAddress = await DeviceInfo.getIpAddress();
-  DEVICE.macAddress = await DeviceInfo.getMacAddress();
+  // DEVICE.ipAddress = await DeviceInfo.getIpAddress();
+  // DEVICE.macAddress = await DeviceInfo.getMacAddress();
   // DEVICE.userAgent = await DeviceInfo.getUserAgent();
   DEVICE.uniqueId = await DeviceInfo.getUniqueId();
   DEVICE.emulator = await DeviceInfo.isEmulator();
   DEVICE.osNumber = await DeviceInfo.getApiLevel();
-  
   // await DeviceInfo.getInstanceId();
   // DEVICE.token = await DeviceInfo.getDeviceToken();
   // const locale = await DeviceInfo.isLocationEnabled();
-
   if (top > 0) {
     SCREEN.top = top;
   }
@@ -44,22 +41,20 @@ export async function initDeviceInfo(top = 0, bottom = 0) {
 
 // 设备信息
 export const DEVICE = {
-  platform: Platform.OS,
+  // platform: Platform.OS,
+  os: Platform.OS,
   osVersion: '',
   osNumber: '',
-  version: '',
   model: '',
   brand: '',
-  deviceId: '',
   deviceName: '',
+  deviceId: '',
   bundleId: '',
-  ipAddress: '',
-  macAddress: '',
-  userAgent: '',
   uniqueId: '',
-  token: '',
+  version: '',
+  // ipAddress: '',
+  // macAddress: '',
   emulator: false,
-  tablet: false,
 };
 
 // 屏幕信息
@@ -70,4 +65,14 @@ export const SCREEN = {
   fontScale, // 字体缩放比例
   bottom: 0, // 底部安全区域
   top: 0, // 顶部安全区域
+};
+
+// 账号信息
+export const ACCOUNT = {
+  token: '',
+  userId: '',
+  userName: '',
+  avatar: '',
+  phone: '',
+  email: '',
 };

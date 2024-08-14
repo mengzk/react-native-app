@@ -84,7 +84,7 @@ interface NetConfig {
   /** 默认请求域名(服务) */
   def_host: string;
   /** 项目请求域名配置，分环境 */
-  env_hosts: HostConfig;
+  env_domain: HostConfig;
   /** 网络请求实体 */
   network: Promise<any>;
   /** 解析请求返回数据 */
@@ -109,7 +109,7 @@ declare class NoRequest {
   private def_env: string;
   private def_host: string;
   private network: (options: RequestOption) => Promise<any>;
-  private env_hosts: HostConfig;
+  private env_domain: HostConfig;
   private parseData: (res: any) => ResultData;
 
   private min_interval?: number;

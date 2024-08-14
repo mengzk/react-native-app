@@ -5,7 +5,7 @@
  */
 
 import {network, parseError} from './axios';
-import {getRequestHost, mergeHeaders, mergeParams} from './config';
+import {getTagDomain, mergeHeaders, mergeParams} from './config';
 
 const min_interval = 600; // 最小间隔
 let timer_id = 0; // 定时器
@@ -24,10 +24,11 @@ export function request({
   reload = false,
   count = 1,
   maxCount = 3,
+  handleResponse = null,
 } = {}) {
   _showLoading(isLoading, loadingText); // 加载框
 
-  const url2 = `${getRequestHost(env, host)}${url}`;
+  const url2 = `${getTagDomain(host, env)}${url}`;
   const data2 = mergeParams(data);
   const headers2 = mergeHeaders(headers);
 
@@ -44,7 +45,11 @@ export function request({
 
     network(options)
       .then(res => {
-        _parseData(res, result);
+        if(handleResponse) {
+          handleResponse(res, result);
+        }else{
+          _parseData(res, result);
+        }
       })
       .catch(err => {
         _parseErr(err, result);

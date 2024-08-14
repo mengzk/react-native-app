@@ -34,6 +34,7 @@
 │   ├── native
 │   ├── network
 │   ├── sensor
+│   ├── store
 │   └── index.js
 ├── pages                         页面
 │   ├── ActionType.js
