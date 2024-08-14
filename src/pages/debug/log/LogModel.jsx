@@ -4,7 +4,7 @@
  * Modify: 2024-08-12
  * Desc: 日志页面
  */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Modal,
@@ -13,14 +13,18 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
+
+import LogDetail from './LogDetail';
 
 let lastTime = 0;
 function LogModel(props) {
-  // {method: 'GET', time: 130, url: 'http://bing.com/ewqew/qrtertwerwwe/weqweq/weqeq', params: {}, code: 200, data: {}, message: '未授权'},
+  // const navigation = useNavigation();
+  // {method: 'GET', time: 130, url: 'http://test.com/qrtere/weqweq', params: {}, code: 200, data: {}, message: '未授权'},
+  const [look, setLook] = useState(false);
   const [visible, setVisible] = useState(false);
   const [list, setList] = useState([]);
-  const navigation = useNavigation();
+  const detail = useRef({});
 
   useEffect(() => {
     setVisible(props.visible);
@@ -35,13 +39,19 @@ function LogModel(props) {
     props.onClose();
   }
 
+  function onCloseLook() {
+    setLook(false);
+  }
+
   function onPress(item) {
     const now = Date.now();
     if (now - lastTime < 1200) {
       return;
     }
     lastTime = now;
-    navigation.navigate('LogDetailPage', {item});
+    detail.current = item;
+    setLook(true);
+    // navigation.navigate('LogDetailPage', {item});
   }
 
   function renderItem({item, index}) {
@@ -79,6 +89,8 @@ function LogModel(props) {
         </View>
         <FlatList style={styles.flat} data={list} renderItem={renderItem} />
       </View>
+      {/* 日志详情 */}
+      {look ? <LogDetail data={detail.current} onClose={onCloseLook}/>:<></>}
     </Modal>
   );
 }

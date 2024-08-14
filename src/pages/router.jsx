@@ -7,7 +7,6 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabStack from './BottomTabStack';
 
-import LogDetailPage from './debug/log/DetailPage';
 import NewProject from './project/NewProject';
 import TestPage from './TestPage';
 import WebPage from './webpage/WebPage';
@@ -28,9 +27,6 @@ const AppStackNavigator = () => {
       <StackView.Screen name="NewProject" component={NewProject} />
       <StackView.Screen name="WebPage" component={WebPage} />
       <StackView.Screen name="TestPage" component={TestPage} />
-
-      {/* 调试 */}
-      <StackView.Screen name="LogDetailPage" component={LogDetailPage} />
     </StackView.Navigator>
   );
 };

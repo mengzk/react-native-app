@@ -5,23 +5,27 @@
  * Desc: 日志页面
  */
 import React, {useEffect, useState} from 'react';
-import { View, Text , ScrollView,TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 
-function LogDetailPage(props) {
-
+function LogDetail(props) {
   const [detail, setDetail] = useState({});
 
   useEffect(() => {
-    console.log('-----> LogDetailPage ', props.route.params);
-    const params = props.route.params;
-    if(params && params.item) {
-      setDetail(params.item);
-    }
+    // console.log('-----> LogDetailPage ', props.route.params);
+    const item = props.data||{};
+    setDetail(item);
     // return () => {};
-  }, []);
+  }, [props.data]);
 
   function onBack() {
-    props.navigation.goBack();
+    // props.navigation.goBack();
+    props.onClose();
   }
 
   return (
@@ -39,14 +43,15 @@ function LogDetailPage(props) {
       </ScrollView>
     </View>
   );
-};
-
-
+}
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
-    backgroundColor: '#f3f3f3',
+    zIndex: 10,
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+    backgroundColor: 'white',
   },
   header: {
     height: 50,
@@ -72,8 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#232323',
   },
-  scroll: {
-
-  }
-})
-export default LogDetailPage;
+  scroll: {},
+});
+export default LogDetail;

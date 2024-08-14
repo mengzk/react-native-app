@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     right: 0,
     width: 66,
     height: 20,
-    zIndex: 1000,
+    zIndex: 99999,
     transform: [{rotate: '45deg'}, {translateX: 16}, {translateY: -10}],
     backgroundColor: 'rgba(255,0,0,0.8)',
   },

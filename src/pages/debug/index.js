@@ -5,4 +5,4 @@
  * Desc: 页面导出文件
  */
 
-export {default as LogDetailPage} from './log/DetailPage';
+export {default as LogDetailPage} from './log/LogDetail';
