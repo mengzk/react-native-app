@@ -7,7 +7,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabStack from './BottomTabStack';
 
-import {LogPage, LogDetailPage, PanelPage} from './debug/index';
+import LogDetailPage from './debug/log/DetailPage';
 import NewProject from './project/NewProject';
 import TestPage from './TestPage';
 import WebPage from './webpage/WebPage';
@@ -30,9 +30,7 @@ const AppStackNavigator = () => {
       <StackView.Screen name="TestPage" component={TestPage} />
 
       {/* 调试 */}
-      <StackView.Screen name="LogPage" component={LogPage} />
       <StackView.Screen name="LogDetailPage" component={LogDetailPage} />
-      <StackView.Screen name="PanelPage" component={PanelPage} />
     </StackView.Navigator>
   );
 };

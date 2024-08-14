@@ -6,5 +6,3 @@
  */
 
 export {default as LogDetailPage} from './log/DetailPage';
-export {default as LogPage} from './log/LogPage';
-export {default as PanelPage} from './panel/PanelPage';

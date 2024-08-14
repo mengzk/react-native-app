@@ -25,6 +25,7 @@ const Configs = {
   appId: 'your id',
   theme: 'light',
   locale: 'zh',
+  maxLog: 100,
   init: () => initConfig(),
   setConfig,
 };

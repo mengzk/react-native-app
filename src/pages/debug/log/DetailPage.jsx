@@ -7,7 +7,7 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text , ScrollView,TouchableOpacity, StyleSheet } from 'react-native';
 
-const LogDetailPage = (props) => {
+function LogDetailPage(props) {
 
   const [detail, setDetail] = useState({});
 

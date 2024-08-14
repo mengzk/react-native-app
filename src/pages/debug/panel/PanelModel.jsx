@@ -4,11 +4,20 @@
  * Modify: 2024-08-12
  * Desc: 调试面板 -Model显示
  */
-import React from 'react';
-import {View, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Modal,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native';
 
 let lastTime = 0;
-const PanelPage = (props) => {
+function PanelModel(props) {
+  const [visible, setVisible] = useState(false);
+
   const list = [
     {title: '切换环境', tag: 0, path: ''},
     {title: '调试H5', tag: 1, path: ''},
@@ -16,8 +25,13 @@ const PanelPage = (props) => {
     {title: '清除缓存', tag: 0, path: ''},
   ];
 
+  useEffect(() => {
+    setVisible(props.visible);
+  }, [props.visible]);
+
   function onBack() {
-    props.navigation.goBack();
+    setVisible(false);
+    props.onClose();
   }
 
   function onPress(item) {
@@ -26,33 +40,38 @@ const PanelPage = (props) => {
       return;
     }
     lastTime = now;
-    console.log('onPress', item);
-    if(item.path) {
+    if (item.path) {
       props.navigation.navigate(item.path);
     }
   }
 
   function renderItem({item, index}) {
     return (
-      <TouchableOpacity key={index} style={styles.item} activeOpacity={0.7} onPress={() => onPress(item)}>
+      <TouchableOpacity
+        key={index}
+        style={styles.item}
+        activeOpacity={0.7}
+        onPress={() => onPress(item)}>
         <Text style={styles.label}>{item.title}</Text>
       </TouchableOpacity>
     );
   }
 
   return (
-    <View style={styles.page}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerBtn} onPress={onBack}>
-          <Text style={styles.btnText}>返回</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>调试面板</Text>
-        <View style={styles.headerBtn}/>
+    <Modal animationType="fade" transparent={true} visible={visible}>
+      <View style={styles.page}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.headerBtn} onPress={onBack}>
+            <Text style={styles.btnText}>返回</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>调试面板</Text>
+          <View style={styles.headerBtn} />
+        </View>
+        <FlatList style={styles.flat} data={list} renderItem={renderItem} />
       </View>
-      <FlatList style={styles.flat} data={list} renderItem={renderItem} />
-    </View>
+    </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -98,4 +117,4 @@ const styles = StyleSheet.create({
     color: '#232323',
   },
 });
-export default PanelPage;
+export default PanelModel;

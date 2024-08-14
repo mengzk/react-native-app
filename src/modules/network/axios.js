@@ -44,10 +44,6 @@ instance.interceptors.response.use(
 
 // 请求方法
 export function network(options={}) {
-  if (options.method == "GET") {
-    options.params = options.data
-    delete options.data
-  }
   return instance.request(options)
 }
 

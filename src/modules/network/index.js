@@ -3,6 +3,7 @@
  * Date: 2024-08-10
  * Desc: 网络请求封装类
  */
+import {DeviceEventEmitter} from 'react-native';
 
 import {network, parseError} from './axios';
 import {getTagDomain, mergeHeaders, mergeParams} from './config';
@@ -21,12 +22,12 @@ export function request({
   isLoading = true,
   loadingText = '加载中...',
   isToast = true,
-  reload = false,
-  count = 1,
-  maxCount = 3,
+  // reload = false,
+  // count = 1,
+  // maxCount = 3,
   handleResponse = null,
 } = op) {
-  // _showLoading(isLoading, loadingText); // 加载框
+  _showLoading(isLoading, loadingText); // 加载框
 
   const url2 = `${getTagDomain(host, env)}${url}`;
   const data2 = mergeParams(data);
@@ -34,7 +35,7 @@ export function request({
 
   const options = {
     url: url2,
-    data: data2,
+    params: data2,
     headers: headers2,
     method: method.toUpperCase(),
     responseType,
@@ -42,14 +43,14 @@ export function request({
   return new Promise(resolve => {
     // 请求结构封装
     const result = {code: -1, data: null, message: ''};
-    const dateNow = Date.now();
+    const startDate = Date.now();
     printLog(options, 'request');
 
     network(options)
       .then(res => {
-        if(handleResponse) {
+        if (handleResponse) {
           handleResponse(res, result);
-        }else{
+        } else {
           _parseData(res, result);
         }
       })
@@ -57,38 +58,46 @@ export function request({
         _parseErr(err, result);
       })
       .finally(() => {
-        const totalTime = Math.round((Date.now() - dateNow)/1000);
+        const dateNow = Date.now();
+        const totalTime = Math.round((dateNow - startDate) / 1000);
+        DeviceEventEmitter.emit('app-request-log', { ...options, ...result, time: totalTime, date: dateNow });
+        printLog(result, 'response');
         _showLoading(false, ''); // 显示加载框
         // 显示 toast
         if (result.code != 0 && isToast) {
           _showToast(result.message);
         }
+        resolve(result);
         // 请求重连
-        if (result.code != 0 && reload && count < maxCount) {
-          const curCount = count + 1;
-          const timer = setTimeout(() => {
-            clearTimeout(timer);
-            request({
-              url,
-              data,
-              method,
-              headers,
-              host,
-              env,
-              isLoading,
-              isToast,
-              reload,
-              maxCount,
-              count: curCount,
-            });
-          }, 1000);
-        } else {
-          resolve(result);
-        }
+        // if (result.code != 0 && reload && count < maxCount) {
+        //   const curCount = count + 1;
+        //   const timer = setTimeout(() => {
+        //     clearTimeout(timer);
+        //     request({
+        //       url,
+        //       data,
+        //       method,
+        //       headers,
+        //       host,
+        //       env,
+        //       isLoading,
+        //       isToast,
+        //       reload,
+        //       maxCount,
+        //       count: curCount,
+        //     });
+        //   }, 1000);
+        // } else {
+        //   resolve(result);
+        // }
       });
   });
 }
-
+/**
+ * 解析数据
+ * @param {*} res
+ * @param {*} result
+ */
 function _parseData(res, result) {
   // console.log("-----> parseData:", res)
   const code = res.code;
@@ -105,19 +114,28 @@ function _parseData(res, result) {
   }
 }
 
-//
+/**
+ * 解析错误
+ * @param {*} err
+ * @param {*} result
+ */
 function _parseErr(err, result) {
-  printLog(err, 'net errpr');
+  // printLog(err, 'net errpr');
   if (err.response) {
     const res = err.response;
     result.code = res.status;
     result.message = err.message;
   } else {
-    result.code = -10101;
+    result.code = -1001;
     result.message = err.message;
   }
 }
 
+/**
+ * 显示加载框
+ * @param {*} show
+ * @param {*} text
+ */
 function _showLoading(show, text = '加载中...') {
   if (timer_id) {
     clearTimeout(timer_id);
@@ -131,12 +149,17 @@ function _showLoading(show, text = '加载中...') {
     }, min_interval);
   }
 }
-function _showToast(text = '加载中...') {}
+
+/**
+ * 显示 toast
+ * @param {*} text
+ */
+function _showToast(text) {}
 
 /**
  * 打印日志
- * @param {*} options 
- * @param {*} tag 
+ * @param {*} options
+ * @param {*} tag
  */
 function printLog(data, tag) {
   console.log('------> ' + tag, data);

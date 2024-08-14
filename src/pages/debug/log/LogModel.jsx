@@ -4,20 +4,35 @@
  * Modify: 2024-08-12
  * Desc: 日志页面
  */
-import React from 'react';
-import {View, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Modal,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 let lastTime = 0;
-const LogPage = props => {
-  const list = [
-    {method: 'GET', status: 200, time: 130, url: 'http://bing.com/erwe/weq/ewqew/qrtertwerwwe/q/ewq/we/qweq/weqeq', params: {}},
-    {method: 'POST', status: 401, time: 235, url: 'http://bing.com/eqwrqweqweqe/we/qwerwerwerw/weqwe/qeq?wded=121231', params: {}},
-    {method: 'GET', status: 500, time: 503, url: 'http://bing.com/ererqerqweqweqewq/wewwerwrqrwerwe/q/weqwe/qeq', params: {}},
-    {method: 'GET', status: 405, time: 369, url: 'http://bing.com/asdasdaq/ewqew/qasasdwe/ewrwetq/ewq/we/q/weq/we/qe/q', params: {}},
-  ];
+function LogModel(props) {
+  // {method: 'GET', time: 130, url: 'http://bing.com/ewqew/qrtertwerwwe/weqweq/weqeq', params: {}, code: 200, data: {}, message: '未授权'},
+  const [visible, setVisible] = useState(false);
+  const [list, setList] = useState([]);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    setVisible(props.visible);
+  }, [props.visible]);
+
+  useEffect(() => {
+    setList(props.data||[]);
+  }, [props.data]);
 
   function onBack() {
-    props.navigation.goBack();
+    setVisible(false);
+    props.onClose();
   }
 
   function onPress(item) {
@@ -26,13 +41,13 @@ const LogPage = props => {
       return;
     }
     lastTime = now;
-    // console.log('onPress', item);
-    props.navigation.navigate('LogDetailPage', {item});
+    navigation.navigate('LogDetailPage', {item});
   }
 
   function renderItem({item, index}) {
     const metStyle = item.method == 'GET' ? styles.method : styles.method2;
-    const staStyle = (item.status == 0 || item.status == 200) ? styles.status : styles.status2;
+    const staStyle =
+      item.code == 0 || item.code == 200 ? styles.status : styles.status2;
     // const paths = (item.url||'/').split('/');
     // const path = paths.slice(paths.length - 2).join('/');
     return (
@@ -43,26 +58,30 @@ const LogPage = props => {
         onPress={() => onPress(item)}>
         <View style={styles.staBox}>
           <Text style={metStyle}>{item.method}</Text>
-          <Text style={staStyle}>{item.status}</Text>
+          <Text style={staStyle}>{item.code}</Text>
         </View>
-        <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail"><Text style={styles.time}>{item.time}s</Text> {item.url}</Text>
+        <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail">
+          <Text style={styles.time}>{item.time}s</Text> {item.url}
+        </Text>
       </TouchableOpacity>
     );
   }
 
   return (
-    <View style={styles.page}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerBtn} onPress={onBack}>
-          <Text style={styles.btnText}>返回</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>网络日志</Text>
-        <View style={styles.headerBtn} />
+    <Modal animationType="fade" transparent={true} visible={visible}>
+      <View style={styles.page}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.headerBtn} onPress={onBack}>
+            <Text style={styles.btnText}>返回</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>网络日志</Text>
+          <View style={styles.headerBtn} />
+        </View>
+        <FlatList style={styles.flat} data={list} renderItem={renderItem} />
       </View>
-      <FlatList style={styles.flat} data={list} renderItem={renderItem} />
-    </View>
+    </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -117,12 +136,12 @@ const styles = StyleSheet.create({
   },
   status: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 12,
     color: '#00C261',
   },
   status2: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 12,
     color: '#FF2626',
   },
   url: {
@@ -136,4 +155,4 @@ const styles = StyleSheet.create({
     color: '#00C261',
   },
 });
-export default LogPage;
+export default LogModel;

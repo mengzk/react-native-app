@@ -16,7 +16,7 @@ export async function initDeviceInfo(top = 0, bottom = 0) {
   DEVICE.model = DeviceInfo.getModel();
   DEVICE.brand = DeviceInfo.getBrand();
   DEVICE.deviceId = DeviceInfo.getDeviceId();
-  DEVICE.bundleId = DeviceInfo.getBundleId();
+  // DEVICE.bundleId = DeviceInfo.getBundleId();
   DEVICE.version = DeviceInfo.getVersion();
   // DEVICE.tablet = DeviceInfo.isTablet();
   DEVICE.deviceName = await DeviceInfo.getDeviceName();
@@ -24,7 +24,7 @@ export async function initDeviceInfo(top = 0, bottom = 0) {
   // DEVICE.macAddress = await DeviceInfo.getMacAddress();
   // DEVICE.userAgent = await DeviceInfo.getUserAgent();
   DEVICE.uniqueId = await DeviceInfo.getUniqueId();
-  DEVICE.emulator = await DeviceInfo.isEmulator();
+  // DEVICE.emulator = await DeviceInfo.isEmulator();
   DEVICE.osNumber = await DeviceInfo.getApiLevel();
   // await DeviceInfo.getInstanceId();
   // DEVICE.token = await DeviceInfo.getDeviceToken();
@@ -49,12 +49,12 @@ export const DEVICE = {
   brand: '',
   deviceName: '',
   deviceId: '',
-  bundleId: '',
+  // bundleId: '',
   uniqueId: '',
   version: '',
   // ipAddress: '',
   // macAddress: '',
-  emulator: false,
+  // emulator: false,
 };
 
 // 屏幕信息

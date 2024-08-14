@@ -13,38 +13,68 @@ import {
   StyleSheet,
   DeviceEventEmitter,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 
 import Configs from '../../config';
 
+import LogModel from './log/LogModel';
+import PanelModel from './panel/PanelModel';
+
 function DebugBox() {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+  const [logs, setLogs] = useState([]);
 
   useEffect(() => {
+    const maxLog = Configs.maxLog;
     const emitter = DeviceEventEmitter.addListener('app-debug', data => {
       setVisible(data);
+    });
+    const emitter2 = DeviceEventEmitter.addListener('app-request-log', data => {
+      logs.push(data);
+      const num3 = logs.length - maxLog;
+      let list = num3 > 0 ? logs.slice(num3, logNum) : [].concat(logs);
+      setLogs(list);
     });
 
     return () => {
       emitter.remove();
+      emitter2.remove();
     };
   }, []);
 
   function onPress() {
-    navigation.navigate('LogPage');
+    setVisible1(true);
   }
 
   function onLongPress() {
-    navigation.navigate('PanelPage');
+    setVisible2(true);
   }
 
   if (Configs.debug || visible) {
     return (
       <View style={styles.page}>
-        <TouchableOpacity activeOpacity={0.8} onPress={onPress} onLongPress={onLongPress}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={onPress}
+          onLongPress={onLongPress}>
           <Text style={styles.debug}>Debug</Text>
         </TouchableOpacity>
+        <LogModel
+          visible={visible1}
+          data={logs}
+          onClose={() => {
+            setVisible1(false);
+          }}
+        />
+        <PanelModel
+          visible={visible2}
+          onClose={() => {
+            setVisible2(false);
+          }}
+        />
       </View>
     );
   } else {
