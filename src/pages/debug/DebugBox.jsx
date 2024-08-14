@@ -32,13 +32,17 @@ function DebugBox() {
   }, []);
 
   function onPress() {
+    navigation.navigate('LogPage');
+  }
+
+  function onLongPress() {
     navigation.navigate('PanelPage');
   }
 
   if (Configs.debug || visible) {
     return (
       <View style={styles.page}>
-        <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+        <TouchableOpacity activeOpacity={0.8} onPress={onPress} onLongPress={onLongPress}>
           <Text style={styles.debug}>Debug</Text>
         </TouchableOpacity>
       </View>
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     width: 66,
     height: 20,
     zIndex: 1000,
-    transform: [{rotate: '45deg'}, {translateX: 15}, {translateY: -8}],
+    transform: [{rotate: '45deg'}, {translateX: 16}, {translateY: -10}],
     backgroundColor: 'rgba(255,0,0,0.8)',
   },
   debug: {

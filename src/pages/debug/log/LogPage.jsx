@@ -10,10 +10,10 @@ import {View, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
 let lastTime = 0;
 const LogPage = props => {
   const list = [
-    {method: 'GET', status: 200, time: 0, url: 'http://bing.com/erwe/weq/ewqew/qrtertwerwwe/q/ewq/we/qweq/weqeq', params: {}},
-    {method: 'POST', status: 401, time: 0, url: 'http://bing.com/eqwrqweqweqe/we/qwerwerwerw/weqwe/qeq?wded=121231', params: {}},
-    {method: 'GET', status: 500, time: 0, url: 'http://bing.com/ererqerqweqweqewq/wewwerwrqrwerwe/q/weqwe/qeq', params: {}},
-    {method: 'GET', status: 405, time: 0, url: 'http://bing.com/asdasdaq/ewqew/qasasdwe/ewrwetq/ewq/we/q/weq/we/qe/q', params: {}},
+    {method: 'GET', status: 200, time: 130, url: 'http://bing.com/erwe/weq/ewqew/qrtertwerwwe/q/ewq/we/qweq/weqeq', params: {}},
+    {method: 'POST', status: 401, time: 235, url: 'http://bing.com/eqwrqweqweqe/we/qwerwerwerw/weqwe/qeq?wded=121231', params: {}},
+    {method: 'GET', status: 500, time: 503, url: 'http://bing.com/ererqerqweqweqewq/wewwerwrqrwerwe/q/weqwe/qeq', params: {}},
+    {method: 'GET', status: 405, time: 369, url: 'http://bing.com/asdasdaq/ewqew/qasasdwe/ewrwetq/ewq/we/q/weq/we/qe/q', params: {}},
   ];
 
   function onBack() {
@@ -31,9 +31,10 @@ const LogPage = props => {
   }
 
   function renderItem({item, index}) {
-    const metStyle = item.method === 'GET' ? styles.method : styles.method2;
-    const paths = (item.url||'/').split('/');
-    const path = paths.slice(paths.length - 2).join('/');
+    const metStyle = item.method == 'GET' ? styles.method : styles.method2;
+    const staStyle = (item.status == 0 || item.status == 200) ? styles.status : styles.status2;
+    // const paths = (item.url||'/').split('/');
+    // const path = paths.slice(paths.length - 2).join('/');
     return (
       <TouchableOpacity
         key={index}
@@ -42,9 +43,9 @@ const LogPage = props => {
         onPress={() => onPress(item)}>
         <View style={styles.staBox}>
           <Text style={metStyle}>{item.method}</Text>
-          <Text style={styles.status}>{item.status}</Text>
+          <Text style={staStyle}>{item.status}</Text>
         </View>
-        <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail"><Text style={styles.time}>{item.time}s</Text> {path}</Text>
+        <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail"><Text style={styles.time}>{item.time}s</Text> {item.url}</Text>
       </TouchableOpacity>
     );
   }
@@ -104,33 +105,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   staBox: {
-    width: 60,
-    alignItems: 'center',
+    width: 52,
   },
   method: {
     fontSize: 14,
-    color: '#232323',
-    fontWeight: 'bold',
+    color: '#3478F6',
   },
   method2: {
     fontSize: 14,
-    color: '#FF6600',
-    fontWeight: 'bold',
+    color: '#FF7D00',
   },
   status: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#FF0099',
+    color: '#00C261',
+  },
+  status2: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FF2626',
   },
   url: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 14,
     color: '#323232',
     marginLeft: 6,
   },
   time: {
     fontSize: 16,
-    color: '#0033FF',
+    color: '#00C261',
   },
 });
 export default LogPage;

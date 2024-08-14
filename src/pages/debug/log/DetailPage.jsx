@@ -18,7 +18,7 @@ const LogDetailPage = (props) => {
       setDetail(params.item);
     }
     // return () => {};
-  });
+  }, []);
 
   function onBack() {
     props.navigation.goBack();
