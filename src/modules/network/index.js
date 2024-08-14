@@ -17,7 +17,7 @@ export function request({
   headers = {},
   responseType = 'json',
   host = '',
-  env = '',
+  env,
   isLoading = true,
   loadingText = '加载中...',
   isToast = true,
@@ -25,8 +25,8 @@ export function request({
   count = 1,
   maxCount = 3,
   handleResponse = null,
-} = {}) {
-  _showLoading(isLoading, loadingText); // 加载框
+} = op) {
+  // _showLoading(isLoading, loadingText); // 加载框
 
   const url2 = `${getTagDomain(host, env)}${url}`;
   const data2 = mergeParams(data);
@@ -42,6 +42,8 @@ export function request({
   return new Promise(resolve => {
     // 请求结构封装
     const result = {code: -1, data: null, message: ''};
+    const dateNow = Date.now();
+    printLog(options, 'request');
 
     network(options)
       .then(res => {
@@ -55,6 +57,7 @@ export function request({
         _parseErr(err, result);
       })
       .finally(() => {
+        const totalTime = Math.round((Date.now() - dateNow)/1000);
         _showLoading(false, ''); // 显示加载框
         // 显示 toast
         if (result.code != 0 && isToast) {
@@ -104,7 +107,7 @@ function _parseData(res, result) {
 
 //
 function _parseErr(err, result) {
-  // console.log(err);
+  printLog(err, 'net errpr');
   if (err.response) {
     const res = err.response;
     result.code = res.status;
@@ -129,3 +132,12 @@ function _showLoading(show, text = '加载中...') {
   }
 }
 function _showToast(text = '加载中...') {}
+
+/**
+ * 打印日志
+ * @param {*} options 
+ * @param {*} tag 
+ */
+function printLog(data, tag) {
+  console.log('------> ' + tag, data);
+}

@@ -8,6 +8,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {Header, CompatButton, ListView} from '../../components/index';
+import {example} from '../../modules/apis/index';
 
 const list = [
   '调试面板',
@@ -42,7 +43,6 @@ class Home extends React.PureComponent {
         path = '';
         break;
     }
-
     if (path) {
       this.props.navigation.navigate({
         name: path,
@@ -55,6 +55,7 @@ class Home extends React.PureComponent {
 
   openPicker = () => {
     console.log('openPicker');
+    example();
   };
 
   render() {

@@ -28,14 +28,22 @@ instance.interceptors.response.use(
     // }
   },
   (error) => {
-    console.log("-----> interceptor err:", error)
-    error.message = parseError(error.response?.status || 404)
-    return Promise.reject(error)
+    console.log("-----> interceptor error")
+    console.log(error.code, error.message, error)
+    if(error.response) {
+      console.log(error.response)
+    }else if(error.request) {
+      console.log(error.request)
+    }else {
+      console.log(error)
+    }
+    const message = parseError(error.code)
+    return Promise.reject({message, code: error.code})
   }
 )
 
 // 请求方法
-export function network(options) {
+export function network(options={}) {
   if (options.method == "GET") {
     options.params = options.data
     delete options.data
@@ -84,8 +92,20 @@ export function parseError(status) {
     case 505:
       msg = 'HTTP 版本不受支持';
       break;
+    case 'ERR_NETWORK':
+      msg = 'No address associated with hostname';
+      break;
     default:
       break;
   }
   return msg;
+}
+
+/**
+ * 打印日志
+ * @param {*} options 
+ * @param {*} tag 
+ */
+function printLog(options, tag) {
+  console.log('------> '+tag, options);
 }

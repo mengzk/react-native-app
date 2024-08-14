@@ -8,7 +8,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabStack from './BottomTabStack';
 
 import {LogPage, LogDetailPage, PanelPage} from './debug/index';
-import {NewProject, WebPage, TestPage} from './index';
+import NewProject from './project/NewProject';
+import TestPage from './TestPage';
+import WebPage from './webpage/WebPage';
 import Launcher from './Launch';
 
 const StackView = createNativeStackNavigator();

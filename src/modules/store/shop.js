@@ -10,13 +10,12 @@ class ShopStore {
   static getShop() {
     return AsyncStorage.getItem('shop');
   }
-  static setShop(account) {
-    return AsyncStorage.setItem('shop', account);
+  static setShop(shop) {
+    AsyncStorage.setItem('shop', shop);
   }
   static remove() {
-    return AsyncStorage.removeItem('shop');
+    AsyncStorage.removeItem('shop');
   }
-
 }
 
 export default ShopStore;

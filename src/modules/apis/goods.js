@@ -1,13 +1,13 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc:
+ * Desc: 商品接口
  */
 import { request } from '../network/index';
 
 export function queryGoods(data = {}) {
   return request({
-    url: 'xhcrmH5Api/apis/visit/app/listAppVisitByCustomerId.do',
+    url: '/visit/app/visitByCustomer',
     method: 'POST',
     data
   })

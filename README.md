@@ -1,5 +1,7 @@
 # 项目介绍
 
+注: !!! 项目 库(package.json -> dependencies) 每3个月要主动升级一次 !!!
+
 ## 项目目录
 
 ├── android                       Android开发工程

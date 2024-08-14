@@ -11,10 +11,10 @@ let userAuth = ''; // 用户认证信息
  * 获取环境域名
  * @param {*} tag 域名标签
  * @param {*} env 环境
- * @returns 
+ * @returns
  */
-export function getTagDomain(tag = 'api', env = configs.env) {
-  return env_domain[env][tag];
+export function getTagDomain(tag = 'api', env) {
+  return env_domain[env || configs.env][tag];
 }
 
 /**
@@ -34,7 +34,7 @@ export function mergeParams(params = {}) {
 export function mergeHeaders(headers = {}) {
   // headers['Content-Type'] = 'application/json;charset=utf-8'
   const token = ACCOUNT.token;
-  if(!userAuth) {
+  if (!userAuth) {
     userAuth = JSON.stringify(DEVICE);
   }
   return {

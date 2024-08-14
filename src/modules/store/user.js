@@ -12,51 +12,55 @@ class UserStore {
    * 获取账号信息
    */
   static getAccount() {
-    return AsyncStorage.getItem('account');
+    return AsyncStorage.getItem('login-account');
   }
 
   /**
    * 设置账号信息
-   * @param {*} account 
+   * @param {*} account
    */
   static setAccount(account) {
-    return AsyncStorage.setItem('account', account);
+    AsyncStorage.setItem('login-account', account);
   }
 
   /**
    * 获取用户信息
    */
-  static getUser() {
-    return AsyncStorage.getItem('user');
+  static getInfo() {
+    return AsyncStorage.getItem('user-info');
   }
 
   /**
    * 设置用户信息
-   * @param {*} user 
+   * @param {*} user
    */
-  static setUser(user) {
-    return AsyncStorage.setItem('user', user);
+  static setInfo(user) {
+    if (user) {
+      AsyncStorage.setItem('user-info', user);
+      AsyncStorage.setItem('user-token', user.token);
+    }
   }
 
   /**
    * 获取用户token
    */
   static getToken() {
-    return AsyncStorage.getItem('token');
+    return AsyncStorage.getItem('user-token');
   }
 
   /**
    * 设置用户信息
    */
   static remove() {
-    return AsyncStorage.removeItem('token');
+    AsyncStorage.removeItem('user-info');
+    AsyncStorage.removeItem('user-token');
   }
 
   /**
    * 清空数据
    */
   static clear() {
-    return AsyncStorage.clear();
+    AsyncStorage.clear();
   }
 }
 

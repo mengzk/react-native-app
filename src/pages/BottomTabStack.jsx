@@ -7,7 +7,9 @@
  import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
  import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
  
- import { Home, Project, My } from './index';
+ import Home from './home/Home';
+ import Project from './project/Project';
+ import My from './my/My';
  
  const Tab = createBottomTabNavigator();
  
