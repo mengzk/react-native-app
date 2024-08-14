@@ -34,6 +34,11 @@ function LogModel(props) {
     setList(props.data||[]);
   }, [props.data]);
 
+
+  function onClean() {
+    props.onClean();
+  }
+
   function onBack() {
     setVisible(false);
     props.onClose();
@@ -85,7 +90,9 @@ function LogModel(props) {
             <Text style={styles.btnText}>返回</Text>
           </TouchableOpacity>
           <Text style={styles.title}>网络日志</Text>
-          <View style={styles.headerBtn} />
+          <TouchableOpacity style={styles.headerBtn2} onPress={onClean}>
+            <Text style={styles.btnText}>清空</Text>
+          </TouchableOpacity>
         </View>
         <FlatList style={styles.flat} data={list} renderItem={renderItem} />
       </View>
@@ -115,6 +122,13 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  headerBtn2: {
+    width: 56,
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   btnText: {
     fontSize: 14,

@@ -68,6 +68,9 @@ function DebugBox() {
           onClose={() => {
             setVisible1(false);
           }}
+          onClean={() => {
+            setLogs([]);
+          }}
         />
         <PanelModel
           visible={visible2}
