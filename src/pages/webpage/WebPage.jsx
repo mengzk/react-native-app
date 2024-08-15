@@ -1,16 +1,14 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc: WebPage 加载H5
- * 使用：
+ * Desc: WebPage 加载H5页面
  *  1.H5端：
- *    window/document.postMessage({event: 'your event type', params: 'your event params', key: '你的应用访问 api 授权key'});
- *    window/document.addEventListener('message', (event) => { 返回数据格式：{event: 'your event type', data: 'return data', code: ‘状态：0成功’} })
+ *    window/document.postMessage({event: '事件名称', params: '参数', token: '访问api授权'});
+ *    window/document.addEventListener('message', (event) => { 返回数据格式：{event: '事件名称', data: '数据', code: ‘状态码：0成功’} })
  *
  *  2.React Native 端
  *    bridge 中添加对应event的具体实现
- *    this.web_view.postMessage(JSON.stringify({event: 'your event type', data: 'return data'}));
- *
+ *    this.web_view.postMessage(JSON.stringify({event: '事件名称', data: '数据', code: '状态码'}));
  */
 
 import React, {PureComponent} from 'react';

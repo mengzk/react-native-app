@@ -2,6 +2,15 @@
  * Author: Meng
  * Date: 2024-08-10
  * Desc: Web消息 处理与解析
+ * bridge: 原生API配置项
+ *    event: '事件名称', 
+ *    func: 执行函数, 
+ *    mode: 是否需要更新WebPage状态, 
+ *    auth: 是否需要权限 
+ * eventInfo: Web消息
+ *    event: '事件名称',
+ *    params: 参数,
+ *    token: 访问权限token
  */
 
 import bridge_account from './bridge_account';
@@ -25,7 +34,7 @@ export async function handlerWebMessage(info = {}, navigation, sendEvent) {
       result.event = info.event;
       if (item && item.func) {
         if (item.auth) {
-          const useApi = checkApiAuth(info.key);
+          const useApi = checkApiAuth(info.token);
           if (!useApi) {
             result.data = '你没有权限访问该方法！';
             return
@@ -78,8 +87,8 @@ export function parseWebEvent(nativeEvent = {}) {
 }
 
 /**
- * key: api授权访问的key
+ * token: api授权访问的token
  */
-function checkApiAuth(key = '') {
+function checkApiAuth(token = '') {
   return true;
 }

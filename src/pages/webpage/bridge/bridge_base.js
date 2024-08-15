@@ -2,6 +2,10 @@
  * Author: Meng
  * Date: 2024-08-10
  * Desc: 基础能力(硬件，系统)API
+ *    event: '事件名称', 
+ *    func: 执行函数, 
+ *    mode: 是否需要更新WebPage状态, 
+ *    auth: 是否需要权限 
  */
 import { Alert, Linking, DeviceEventEmitter } from 'react-native';
 
