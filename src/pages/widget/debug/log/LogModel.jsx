@@ -35,6 +35,7 @@ function LogModel(props) {
   }, [props.data]);
 
   function onClean() {
+    setList([]);
     props.onClean();
   }
 
@@ -58,11 +59,15 @@ function LogModel(props) {
     // navigation.navigate('LogDetailPage', {item});
   }
 
+  // 是否请求失败 fail
+  function isOk(item) {
+    return item.code == 0 || item.code == 200;
+  }
+
   function renderItem({item, index}) {
     const metStyle = item.method == 'GET' ? styles.method : styles.method2;
-    const staStyle =
-      item.code == 0 || item.code == 200 ? styles.status : styles.status2;
-    const path = (item.url||'').split('?')[0];
+    const staStyle = isOk(item) ? styles.status : styles.status2;
+    const path = (item.url||'');
     // const paths = (item.url||'/').split('/');
     // const path = paths.slice(paths.length - 2).join('/');
     return (

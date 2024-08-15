@@ -28,11 +28,12 @@ function DebugBox() {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
+    const maxLog = Configs.maxLog;
     const emitter = DeviceEventEmitter.addListener('app-debug', data => {
       setVisible(data);
     });
     const emitter2 = DeviceEventEmitter.addListener('app-request-log', data => {
-      addLog(data);
+      addLog(data, maxLog);
     });
 
     return () => {
@@ -41,14 +42,21 @@ function DebugBox() {
     };
   }, []);
 
-  function addLog(data) {
-    const maxLog = Configs.maxLog;
+  // 清空日志
+  function clearLogs() {
+    setLogs([]);
+  }
+
+  // 添加日志
+  function addLog(data, maxLog) {
+    // console.log('-----> DebugBox addLog:', logs.length, data);
     const endDate = Date.now();
     data.date = new Date(data.startDate).toLocaleString();
     data.time = Math.round((endDate - data.startDate) / 1000);
+    // 
     logs.push(data);
     const num3 = logs.length - maxLog;
-    let list = num3 > 0 ? logs.slice(num3, logNum) : [].concat(logs);
+    let list = num3 > 0 ? logs.slice(num3, logs.length) : [].concat(logs);
     setLogs(list);
   }
 
@@ -75,9 +83,7 @@ function DebugBox() {
           onClose={() => {
             setVisible1(false);
           }}
-          onClean={() => {
-            setLogs([]);
-          }}
+          onClean={clearLogs}
         />
         <PanelModel
           visible={visible2}
