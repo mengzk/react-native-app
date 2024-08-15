@@ -12,6 +12,8 @@ class Location {
    */
   static getCurLocation() {
     return new Promise(resolve => {
+      // 权限检查
+
       // 获取定位信息
 
       // 获取失败, 从缓存中获取
@@ -22,20 +24,19 @@ class Location {
   }
 
   /**
-   * 获取保存定位信息
+   * 获取保存定位信息 {lat, lon}
    */
   static getStore() {
-    return AsyncStorage.getItem('location');
+    const latlon = AsyncStorage.getItem('location');
+    return latlon ? JSON.parse(latlon) : null;
   }
 
   /**
    * 保存定位信息
-   * @param {*} location
+   * @param {*} location {lat, lon}
    */
-  static setStore(location) {
-    if(location){
-      AsyncStorage.setItem('location', location);
-    }
+  static setStore(location={}) {
+    AsyncStorage.setItem('location', JSON.stringify(location));
   }
 
   /**

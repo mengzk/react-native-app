@@ -8,13 +8,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class ShopStore {
   static getShop() {
-    return AsyncStorage.getItem('shop');
+    const shop = AsyncStorage.getItem('cu-shop');
+    return shop ? JSON.parse(shop) : null;
   }
-  static setShop(shop) {
-    AsyncStorage.setItem('shop', shop);
+  /**
+   * 
+   * @param {*} shop 
+   */
+  static setShop(shop={}) {
+    AsyncStorage.setItem('cu-shop', JSON.stringify(shop));
   }
   static remove() {
-    AsyncStorage.removeItem('shop');
+    AsyncStorage.removeItem('cu-shop');
   }
 }
 

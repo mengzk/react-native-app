@@ -5,3 +5,4 @@
  * Desc: 存储模块
  */
 
+function Store() {}

@@ -9,25 +9,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class UserStore {
   /**
-   * 获取账号信息
+   * 获取账号信息 {account, pwd}
    */
   static getAccount() {
-    return AsyncStorage.getItem('login-account');
+    const account = AsyncStorage.getItem('login-account');
+    return account ? JSON.parse(account) : null;
   }
 
   /**
    * 设置账号信息
-   * @param {*} account
+   * @param {*} account {account, pwd}
    */
   static setAccount(account) {
-    AsyncStorage.setItem('login-account', account);
+    AsyncStorage.setItem('login-account', JSON.stringify(account));
   }
 
   /**
    * 获取用户信息
    */
   static getInfo() {
-    return AsyncStorage.getItem('user-info');
+    const info = AsyncStorage.getItem('user-info');
+    return info ? JSON.parse(info) : null;
   }
 
   /**
@@ -36,7 +38,7 @@ class UserStore {
    */
   static setInfo(user) {
     if (user) {
-      AsyncStorage.setItem('user-info', user);
+      AsyncStorage.setItem('user-info', JSON.stringify(user));
       AsyncStorage.setItem('user-token', user.token);
     }
   }
