@@ -17,18 +17,16 @@ import WebView from 'react-native-webview';
 
 import {handlerWebMessage, parseWebEvent} from './bridge/index';
 import {Header, SharePop} from './component/index';
-import emit_keys from './constants/index';
 
 import Images from '../../assets/imgs';
 
 // 绑定 window.postMessage
 const injectedJavaScript = `window.postMessage = function(data) {window.ReactNativeWebView.postMessage(data);}`;
-
+const h5HandKey = 'handler_h5_receivers';
+// -
 export default class WebPage extends PureComponent {
   web_view = null;
-
-  handler_emit = null;
-  app_route_emit = null;
+  h5HandEmit = null;
 
   constructor(props) {
     super(props);
@@ -37,32 +35,23 @@ export default class WebPage extends PureComponent {
       canGoBack: false,
       enableAplha: false,
       showShare: false,
+      inited: false,
       title: '',
-      tagUrl:
-        'https://dhstatic.bthome.com/appstore/test/landingpageStatic/index.html#/spatialCase/case?fromPage=pad', // h5项目地址
+      url: 'https://dhstatic.bthome.com/appstore/test/landingpageStatic/index.html#/spatialCase/case?fromPage=pad', // h5项目地址
       curUrl: '', // 当前网站地址
       headerConfig: {},
       shareData: {title: '', desc: '', image: ''},
       rightBtns: [],
-      userAgentName: '',
+      agent: '',
     };
   }
 
   componentDidMount() {
     // 监听 处理Web发送消息 结果
-    this.handler_emit = DeviceEventEmitter.addListener(
-      emit_keys.handler,
-      this._handlerEventResult,
+    this.h5HandEmit = DeviceEventEmitter.addListener(
+      h5HandKey,
+      this.handlerEmitLis,
     );
-
-    // 监听 Web发送的 emitter消息
-    this.app_route_emit = DeviceEventEmitter.addListener(
-      emit_keys.app_route,
-      data => {
-        this._sendEvent({event: emit_keys.app_route, data});
-      },
-    );
-
     this.parseRoute();
   }
 
@@ -70,17 +59,16 @@ export default class WebPage extends PureComponent {
     if (this.web_view) {
       this.web_view = null;
     }
-    if (this.handler_emit) {
-      this.handler_emit.remove();
-    }
-    if (this.app_route_emit) {
-      this.app_route_emit.remove();
+    if (this.h5HandEmit) {
+      this.h5HandEmit.remove();
     }
   }
 
   // 解析参数
   parseRoute = () => {
     const route = this.props.route || {};
+
+    this.setState({inited: true});
   };
 
   // 点击返回键
@@ -99,16 +87,13 @@ export default class WebPage extends PureComponent {
     this.setState({showShare});
   };
 
-  // web消息处理之后操作 {event: '操作项', data: '数据', state: '要刷新的数据'}
-  _handlerEventResult = (res = {}) => {
+  // 消息处理 {event: '操作项', data: '数据', state: '要刷新的数据'}
+  handlerEmitLis = (res = {}) => {
     // console.log(`------> handlerEventResult:`, res);
-    let obj = null;
     switch (res.event) {
       case 'chatRoom': // 聊天室/客服
         break;
       case 'payment': // 支付
-        break;
-      case 'cashier': // 收银台
         break;
       default:
         break;
@@ -117,47 +102,54 @@ export default class WebPage extends PureComponent {
     this._sendEvent(res);
   };
 
-  /** info: {action, params} */
-  _handlerWebEmit = (info = {}) => {
-    const data = info.params || {};
-    console.log('------> handlerWebEmit:', info);
-    DeviceEventEmitter.emit(info.action, data);
+  /**
+   * h5与native交互
+   * @param {Object} params {action: '事件名称', data: '数据'}
+   */
+  _handlerWebEmit = (params = {}) => {
+    console.log('------> handlerWebEmit:', params);
+    DeviceEventEmitter.emit(params.action, params.data);
   };
 
-  // 发送消息到web {event: 'your event type', data: 'return data', code: '状态：0成功', state: '要刷新的数据'}
-  _sendEvent = msgData => {
-    const newState = msgData.state; // state不为空表示需要刷新页面
-    if (typeof newState == 'object') {
-      const pageState = this.state;
-      for (const key in newState) {
-        if (!Object.hasOwnProperty.call(pageState, key)) {
-          throw Error(`------> There is no such variable: ${key}`);
+  /**
+   * 发送消息到web
+   * @param {*} msgData {event: '事件', data: '数据', code: '状态码', state: '要刷新的数据'}
+   */
+  _sendEvent = (msgData = {}) => {
+    const newState = msgData.state;
+    // state不为空表示需要刷新页面
+    if (newState) {
+      if (typeof newState == 'object') {
+        const pageState = this.state;
+        for (const key in newState) {
+          if (!Object.hasOwnProperty.call(pageState, key)) {
+            console.warn(`------> There is no such variable: ${key}`);
+          }
         }
+        this.setState(newState);
+      } else {
+        console.warn(`------> Illegal value type: ${newState}`);
       }
-      this.setState(newState);
-    } else if (newState != null) {
-      throw Error(`------> Illegal value type: ${newState}`);
+      delete msgData.state;
     }
+    // 发送消息到web
     if (this.web_view) {
-      if (newState) {
-        delete msgData.state;
-      }
+      console.log(`------> send to h5:`, msgData);
       // todo: 对格式做校验
       this.web_view.postMessage(JSON.stringify(msgData));
-      console.log(`------> send to h5:`, msgData);
     }
   };
 
-  // 开始加载 - 可做加载动画
-  _onLoadStart = res => {
-    console.log('------> onLoadStart', res.nativeEvent);
+  // 开始加载
+  _onLoadStart = () => {
+    // console.log('------> onLoadStart');
+    if(!this.state.inited) {
+      // TODO1: 加载动画
+    }
   };
 
-  // 状态变化
-  // _onStateChange = res => { console.log('------> onStateChange', res); };
-
   // 加载结束
-  _onLoadEnd = res => {
+  _onLoadEnd = (res = {}) => {
     const nativeEvent = res?.nativeEvent || {};
     if (nativeEvent) {
       const curUrl = nativeEvent.url;
@@ -173,7 +165,7 @@ export default class WebPage extends PureComponent {
   };
 
   // Web错误处理
-  _onWebError = err => {
+  _onWebError = (err={}) => {
     console.warn(`------> onWebError: `, err.nativeEvent);
   };
 
@@ -215,8 +207,7 @@ export default class WebPage extends PureComponent {
   };
 
   render() {
-    const {title, tagUrl, showShare, rightBtns, bounce, userAgentName} =
-      this.state;
+    const {title, url, showShare, rightBtns, bounce, agent} = this.state;
 
     return (
       <View style={styles.page}>
@@ -231,10 +222,10 @@ export default class WebPage extends PureComponent {
             this.web_view = view;
           }}
           style={styles.web}
-          source={{uri: tagUrl}}
+          source={{uri: url}}
           bounces={bounce}
           injectedJavaScript={injectedJavaScript}
-          applicationNameForUserAgent={userAgentName}
+          applicationNameForUserAgent={agent}
           // onNavigationStateChange={this._onStateChange}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
