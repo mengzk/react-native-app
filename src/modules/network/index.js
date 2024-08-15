@@ -58,9 +58,7 @@ export function request({
         _parseErr(err, result);
       })
       .finally(() => {
-        const dateNow = Date.now();
-        const totalTime = Math.round((dateNow - startDate) / 1000);
-        DeviceEventEmitter.emit('app-request-log', { ...options, ...result, time: totalTime, date: dateNow });
+        DeviceEventEmitter.emit('app-request-log', { ...options, ...result, startDate });
         printLog(result, 'response');
         _showLoading(false, ''); // 显示加载框
         // 显示 toast

@@ -31,9 +31,8 @@ function LogModel(props) {
   }, [props.visible]);
 
   useEffect(() => {
-    setList(props.data||[]);
+    setList(props.data || []);
   }, [props.data]);
-
 
   function onClean() {
     props.onClean();
@@ -74,9 +73,11 @@ function LogModel(props) {
         <View style={styles.staBox}>
           <Text style={metStyle}>{item.method}</Text>
           <Text style={staStyle}>{item.code}</Text>
+          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.time}>{item.time}s</Text>
         </View>
         <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail">
-          <Text style={styles.time}>{item.time}s</Text> {item.url}
+          {item.url}
         </Text>
       </TouchableOpacity>
     );
@@ -97,7 +98,7 @@ function LogModel(props) {
         <FlatList style={styles.flat} data={list} renderItem={renderItem} />
       </View>
       {/* 日志详情 */}
-      {look ? <LogDetail data={detail.current} onClose={onCloseLook}/>:<></>}
+      {look ? <LogDetail data={detail.current} onClose={onCloseLook} /> : <></>}
     </Modal>
   );
 }
@@ -147,10 +148,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 1,
     backgroundColor: 'white',
-    flexDirection: 'row',
   },
   staBox: {
-    width: 52,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
   },
   method: {
     fontSize: 14,
@@ -158,26 +160,31 @@ const styles = StyleSheet.create({
   },
   method2: {
     fontSize: 14,
-    color: '#FF7D00',
+    color: '#FF6600',
   },
   status: {
+    marginHorizontal: 12,
+    fontSize: 14,
     fontWeight: 'bold',
-    fontSize: 12,
     color: '#00C261',
   },
   status2: {
+    marginHorizontal: 12,
+    fontSize: 14,
     fontWeight: 'bold',
-    fontSize: 12,
     color: '#FF2626',
   },
   url: {
-    flex: 1,
     fontSize: 14,
     color: '#323232',
-    marginLeft: 6,
+  },
+  date: {
+    flex: 1,
+    fontSize: 13,
+    color: '#232323',
   },
   time: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#00C261',
   },
 });

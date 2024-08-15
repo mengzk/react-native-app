@@ -28,15 +28,11 @@ function DebugBox() {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    const maxLog = Configs.maxLog;
     const emitter = DeviceEventEmitter.addListener('app-debug', data => {
       setVisible(data);
     });
     const emitter2 = DeviceEventEmitter.addListener('app-request-log', data => {
-      logs.push(data);
-      const num3 = logs.length - maxLog;
-      let list = num3 > 0 ? logs.slice(num3, logNum) : [].concat(logs);
-      setLogs(list);
+      addLog(data);
     });
 
     return () => {
@@ -44,6 +40,17 @@ function DebugBox() {
       emitter2.remove();
     };
   }, []);
+
+  function addLog(data) {
+    const maxLog = Configs.maxLog;
+    const endDate = Date.now();
+    data.date = new Date(data.startDate).toLocaleString();
+    data.time = Math.round((endDate - data.startDate) / 1000);
+    logs.push(data);
+    const num3 = logs.length - maxLog;
+    let list = num3 > 0 ? logs.slice(num3, logNum) : [].concat(logs);
+    setLogs(list);
+  }
 
   function onPress() {
     setVisible1(true);
@@ -69,6 +76,7 @@ function DebugBox() {
             setVisible1(false);
           }}
           onClean={() => {
+            logs = [];
             setLogs([]);
           }}
         />
