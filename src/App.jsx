@@ -9,7 +9,7 @@ import {DeviceEventEmitter} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 import AppStackNavigator from './pages/router';
-import DebugBox from './pages/debug/DebugBox';
+import DebugBox from './pages/widget/debug/DebugBox';
 import AppLoading from './pages/widget/Loading';
 import HintModel from './pages/widget/HintModel';
 

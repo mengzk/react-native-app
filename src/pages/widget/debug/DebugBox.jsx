@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 // import {useNavigation} from '@react-navigation/native';
 
-import Configs from '../../config';
+import Configs from '../../../config/index';
 
 import LogModel from './log/LogModel';
 import PanelModel from './panel/PanelModel';
@@ -76,7 +76,6 @@ function DebugBox() {
             setVisible1(false);
           }}
           onClean={() => {
-            logs = [];
             setLogs([]);
           }}
         />

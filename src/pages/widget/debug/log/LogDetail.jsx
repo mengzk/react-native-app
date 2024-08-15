@@ -27,6 +27,14 @@ function LogDetail(props) {
     props.onClose();
   }
 
+  // 是否请求失败 fail
+  function isOk() {
+    return detail.code == 0 || detail.code == 200;
+  }
+
+  const metStyle = detail.method == 'GET' ? styles.method : styles.method2;
+  const staStyle = isOk() ? styles.status : styles.status2;
+
   return (
     <View style={styles.page}>
       <View style={styles.header}>
@@ -36,17 +44,14 @@ function LogDetail(props) {
         <Text style={styles.title}>日志详情</Text>
         <View style={styles.headerBtn} />
       </View>
-
+      <View style={styles.topBox}>
+        <Text style={metStyle}>{detail.method}</Text>
+        <Text style={staStyle}>{detail.code}</Text>
+        <Text style={styles.date}>{detail.date}</Text>
+        <Text style={styles.time}>{detail.time}s</Text>
+      </View>
+      <Text style={styles.url} selectable>{detail.url}</Text>
       <ScrollView style={styles.scroll}>
-        <View style={styles.topBox}>
-          <Text style={styles.method}>{detail.method}</Text>
-          <Text style={styles.status}>{detail.code}</Text>
-          <Text style={styles.date}>{detail.date}</Text>
-          <Text style={styles.time}>{detail.time}</Text>
-        </View>
-        <Text style={styles.url} selectable>
-          Url: {detail.url}
-        </Text>
         <Text style={styles.text} selectable>
           Headers: {JSON.stringify(detail.headers)}
         </Text>
@@ -104,9 +109,8 @@ const styles = StyleSheet.create({
   topBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f3f3f3',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
   method: {
     fontSize: 14,
@@ -141,6 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#323232',
     marginBottom: 12,
+    paddingHorizontal: 12,
   },
   text: {
     marginBottom: 12,

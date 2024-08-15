@@ -36,6 +36,7 @@ export function mergeHeaders(headers = {}) {
   const token = ACCOUNT.token;
   if (!userAuth) {
     userAuth = JSON.stringify(DEVICE);
+    // userAuth = userAuth.replace(/"/g, '');
   }
   return {
     token,
@@ -47,17 +48,17 @@ export function mergeHeaders(headers = {}) {
 // 环境域名
 const env_domain = {
   prod: {
-    api: 'http://def.com',
+    api: 'http://api.com',
     auth: 'http://auth.com',
     order: 'http://order.com',
   },
   test: {
-    api: 'http://def-test.com',
+    api: 'http://api-test.com',
     auth: 'http://auth-test.com',
     order: 'http://order-test.com',
   },
   dev: {
-    api: 'http://def-test.com',
+    api: 'http://api-test.com',
     auth: 'http://auth-test.com',
     order: 'http://order-test.com',
   },

@@ -4,5 +4,6 @@
  * Modify: 2024-08-12
  * Desc: 页面导出文件
  */
+function debugIndex() {
 
-export {default as LogDetailPage} from './log/LogDetail';
+}

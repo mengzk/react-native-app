@@ -2,6 +2,17 @@
 
 注: !!! 项目 库(package.json -> dependencies) 每3个月要主动升级一次 !!!
 
+
+## 库
+
+- 存储: @react-native-async-storage/async-storage (除非有性能问题,否则不要体会)
+- 相机: 
+- 定位: 
+- 蓝牙: 
+- 设备: 
+- 
+
+
 ## 项目目录
 
 ├── android                       Android开发工程

@@ -18,13 +18,14 @@ class Location {
 
       // 获取失败, 从缓存中获取
       // Location.getStore();
-      // 存储定位信息
+
+      // 更新存储定位信息
       // Location.setStore('location');
     });
   }
 
   /**
-   * 获取保存定位信息 {lat, lon}
+   * 获取保存定位信息 {lat, lon, address, city, code}
    */
   static getStore() {
     const latlon = AsyncStorage.getItem('location');
