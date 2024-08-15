@@ -45,11 +45,11 @@ export async function handlerWebMessage(info = {}, navigation, sendEvent) {
         result.data = `未发现${info.event}方法！`;
       }
     } catch (error) {
-      console.warn(`handlerWebMessage ------> Err: `, error);
-      result.data = 'Handle your api error!';
+      console.warn(`------> handlerWebMessage Err: `, error);
+      result.data = 'handle your api error!';
     }
   } else {
-    console.warn(`handlerWebMessage ------> api event = undefined `);
+    console.warn(`------> handlerWebMessage api event = undefined `);
     result.data = 'Your api event value = undefined';
   }
   // 发送消息
@@ -63,7 +63,7 @@ export function parseWebEvent(nativeEvent = {}) {
   const url = nativeEvent.url;
   const data = nativeEvent.data;
   const title = nativeEvent.title;
-  console.log(`parseWebEvent ------> title: ${title}, url: ${url}, data: ${data}`);
+  console.log(`------> parseWebEvent title: ${title}, url: ${url}, data: ${data}`);
 
   let info = {};
   try {
@@ -71,7 +71,7 @@ export function parseWebEvent(nativeEvent = {}) {
       info = JSON.parse(data);
     }
   } catch (err) {
-    console.warn(`parseWebEvent JSON.parse ------> Err: `, err);
+    console.warn(`------> parseWebEvent JSON.parse Err: `, err);
     info = { event: 'parse_error', data: '数据格式错误: {event, params, key}', code: -1 }
   }
   return info;

@@ -3,9 +3,9 @@
  * Date: 2024-08-10
  * Desc: 基础能力(硬件，系统)API
  */
-import { StatusBar, Alert, Platform, Linking, Dimensions, DeviceEventEmitter } from 'react-native';
-// import DeviceInfo from 'react-native-device-info';
-// import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Alert, Linking, DeviceEventEmitter } from 'react-native';
+
+import {DEVICE, SCREEN} from '../../../config/constants'
 
 // 原生api配置项
 const bridge_base = [
@@ -20,30 +20,20 @@ const bridge_base = [
   { event: 'eventEmitter', func: sendEventEmitter, auth: true },
 ];
 
-const { width, height } = Dimensions.get('window');
-const bottomBarHeight = 0;
-const statusBarHeight = StatusBar.currentHeight || 0;
-const os = Platform.OS;
-const osVersion = Platform.Version;
-const appVersion = '1.0.1';
 
-// 获取设备信息
+// 获取app版本号
 async function getAppVersion() {
-  return { os, osVersion, appVersion };
+  return DEVICE.version;
 }
 
 // 获取设备屏幕相关信息
 async function getScreenInfo() {
-  return { width, height, statusBarHeight, bottomBarHeight, headerHeight: 48 };
+  return { ...SCREEN, headerHeight: 48 };
 }
 
 // 获取设备信息
 async function getDeviceInfo() {
-  // {getBuildNumber, getDeviceId, getIpAddress, getPhoneNumber, getUniqueId}
-  const uniqueId = '' // DeviceInfo.getUniqueId();
-  const machine = '' // DeviceInfo.getModel();
-
-  return { os, osVersion, appVersion, machine, uniqueId };
+  return DEVICE;
 }
 
 // 当前店铺信息

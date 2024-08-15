@@ -3,6 +3,7 @@
  * Date: 2024-08-10
  * Desc: 账号相关API
  */
+import UserStore from '../../../modules/store/user'
 
 // 原生api配置项
 const bridge_account = [
@@ -12,12 +13,12 @@ const bridge_account = [
 
 // 
 async function getUserInfo(params = {}) {
-  return params
+  return UserStore.getInfo();
 }
 
 // 
 async function getToken(params = {}) {
-  return params
+  return UserStore.getToken();
 }
 
 export default bridge_account;
