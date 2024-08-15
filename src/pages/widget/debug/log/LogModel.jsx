@@ -62,6 +62,7 @@ function LogModel(props) {
     const metStyle = item.method == 'GET' ? styles.method : styles.method2;
     const staStyle =
       item.code == 0 || item.code == 200 ? styles.status : styles.status2;
+    const path = (item.url||'').split('?')[0];
     // const paths = (item.url||'/').split('/');
     // const path = paths.slice(paths.length - 2).join('/');
     return (
@@ -77,7 +78,7 @@ function LogModel(props) {
           <Text style={styles.time}>{item.time}s</Text>
         </View>
         <Text style={styles.url} numberOfLines={2} ellipsizeMode="tail">
-          {item.url}
+          {path}
         </Text>
       </TouchableOpacity>
     );

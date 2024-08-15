@@ -19,7 +19,7 @@ function LogDetail(props) {
 
   useEffect(() => {
     // console.log('-----> LogDetailPage ', props.route.params);
-    const item = props.data || {};
+    // const item = props.data || {};
     // return () => {};
   }, [props.data]);
 
