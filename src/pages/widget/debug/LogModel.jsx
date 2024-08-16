@@ -37,6 +37,7 @@ function LogModel(props) {
   function onClean() {
     setList([]);
     props.onClean();
+    onBack();
   }
 
   function onBack() {
