@@ -12,6 +12,7 @@
 - 设备: react-native-device-info
 - 分享: react-native-share
 - 权限: react-native-permissions
+- 视频: react-native-video
 
 
 ## 项目目录
