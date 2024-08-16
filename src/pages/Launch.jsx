@@ -17,8 +17,6 @@ const Launch = props => {
   let {top, bottom} = useSafeAreaInsets(); // 安全区域
 
   useEffect(() => {
-    // 初始化配置
-    Configs.init();
     // 初始化设备信息
     initDeviceInfo(top, bottom);
     // 初始化三方库

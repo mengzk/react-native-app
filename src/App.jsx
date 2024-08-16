@@ -4,10 +4,11 @@
  * Desc: App 入口
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {DeviceEventEmitter} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
+import Configs from './config/index';
 import AppStackNavigator from './pages/router';
 import DebugBox from './pages/widget/debug/DebugBox';
 import AppLoading from './pages/widget/Loading';
@@ -23,6 +24,11 @@ function getRoute(route) {
 }
 
 const App = () => {
+  useEffect(() => {
+    // 初始化配置
+    Configs.init();
+  }, []);
+
   return (
     <NavigationContainer
       onStateChange={state => {

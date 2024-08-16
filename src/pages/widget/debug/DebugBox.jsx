@@ -17,8 +17,8 @@ import {
 
 import Configs from '../../../config/index';
 
-import LogModel from './log/LogModel';
-import PanelModel from './panel/PanelModel';
+import LogModel from './LogModel';
+import PanelModel from './PanelModel';
 
 function DebugBox() {
   // const navigation = useNavigation();

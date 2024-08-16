@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default AppLoading;
+export default React.memo(AppLoading);

@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default HintModel;
+export default React.memo(HintModel);
