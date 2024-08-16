@@ -4,7 +4,7 @@
  * Desc: App 入口
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {DeviceEventEmitter} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -23,12 +23,9 @@ function getRoute(route) {
   return route;
 }
 
+// 初始化配置 -useEffect 会加载两次
+Configs.init();
 const App = () => {
-  useEffect(() => {
-    // 初始化配置
-    Configs.init();
-  }, []);
-
   return (
     <NavigationContainer
       onStateChange={state => {

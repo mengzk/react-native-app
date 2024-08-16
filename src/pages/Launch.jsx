@@ -9,7 +9,6 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Images from '../assets/imgs';
-import Configs from '../config/index';
 import {initDeviceInfo} from '../config/constants';
 import {initLibs} from '../libs/index';
 

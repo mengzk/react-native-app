@@ -13,11 +13,13 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import Configs from '../../../config/index';
 
 let lastTime = 0;
 function PanelModel(props) {
+  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [curEnv, setCurEnv] = useState('');
   const envList = ['prod', 'uat', 'test', 'dev'];
@@ -42,6 +44,9 @@ function PanelModel(props) {
   function onCutEnv(env) {
     setCurEnv(env);
     Configs.setEnv(env);
+    onBack();
+    // 已登录,重新登录
+    navigation.reset({index: 0, routes: [{name: 'Launch'}]});
   }
 
   // 点击事件
@@ -52,7 +57,7 @@ function PanelModel(props) {
     }
     lastTime = now;
     if (item.path) {
-      props.navigation.navigate(item.path);
+      navigation.navigate(item.path);
     }
   }
 
@@ -154,7 +159,7 @@ const styles = StyleSheet.create({
   envbox: {
     marginLeft: 8,
     backgroundColor: '#3478F6',
-    borderRadius: 4,
+    borderRadius: 5,
     paddingVertical: 2,
     paddingHorizontal: 8,
   },

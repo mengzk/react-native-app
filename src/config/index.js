@@ -8,10 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // 初始化配置 -
 async function initConfig() {
-  const env = await AsyncStorage.getItem('configEnv')
+  const env = await AsyncStorage.getItem('configEnv');
   if (env) {
     Configs.env = env;
   }
+  console.log('-----> config: ', Configs);
 }
 
 // 设置配置
@@ -22,8 +23,9 @@ function setConfig(config = {}) {
 // 设置切换环境 -防止乱输入
 function setEnv(key) {
   let env = key;
-  switch(key) {
+  switch (key) {
     case 'dev':
+    case 'uat':
     case 'test':
     case 'prod':
       break;
@@ -50,6 +52,5 @@ const Configs = {
   setConfig,
   setEnv,
 };
-
 
 export default Configs;
