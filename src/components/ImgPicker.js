@@ -8,7 +8,7 @@ import { View, Image, TouchableOpacity, Linking, Platform, StyleSheet } from 're
 import ActionSheet from 'react-native-actionsheet';
 import { Toast } from 'react-native-bnq-app-framework';
 import { ImagePreviewModal } from "bnq-ui";
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
 
 import { CommonAsset } from '../../sssets/index';
 import { BnqRouter } from 'Project/BCore/Utils/RouterUtils';
@@ -120,13 +120,13 @@ const ImgPicker = (props) => {
     if (tag == 'photo') {
       count = max - imgList.filter(e => e != icon).length;
       // photo_config.maxFiles = count;
-      imgs = await ImagePicker.openPicker(photo_config);
+      // imgs = await ImagePicker.openPicker(photo_config);
     } else if(tag == 'waterMark'){
       const img = await handleWaterMarkPic();
       imgs.push(img);
     }else{
-      const img = await ImagePicker.openCamera(photo_config);
-      imgs.push(img);
+      // const img = await ImagePicker.openCamera(photo_config);
+      // imgs.push(img);
     }
     let size = imgs.length;
     if (size > count) {
