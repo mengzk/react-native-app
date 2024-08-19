@@ -11,6 +11,7 @@ import NewProject from './project/NewProject';
 import TestPage from './TestPage';
 import WebPage from './webpage/WebPage';
 import Launcher from './Launch';
+import CameraPage from './hardware/Camera'; // 拍照/录像页面
 
 const StackView = createNativeStackNavigator();
 const AppStackNavigator = () => {
@@ -26,6 +27,7 @@ const AppStackNavigator = () => {
       <StackView.Screen name="Main" component={BottomTabStack} />
       <StackView.Screen name="NewProject" component={NewProject} />
       <StackView.Screen name="WebPage" component={WebPage} />
+      <StackView.Screen name="CameraPage" component={CameraPage} />
       <StackView.Screen name="TestPage" component={TestPage} />
     </StackView.Navigator>
   );

@@ -1,27 +1,31 @@
 /**
  * Author: Meng
  * Date: 2024-08-10
- * Desc:
+ * Desc: 拍照/录像页面
+ *
  */
 
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import SelectDatePicker from '../components/SelectDatePicker'
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {Camera, useCameraDevice} from 'react-native-vision-camera';
 
-const TestPage = () => {
+function TestPage(props) {
+  const device = useCameraDevice('back');
+
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.page}>
-      <SelectDatePicker />
+      <Camera style={StyleSheet.page} device={device} isActive={true} />
     </View>
   );
-};
-
-
+}
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1
-  }
-})
+    flex: 1,
+  },
+});
 export default TestPage;

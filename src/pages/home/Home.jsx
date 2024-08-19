@@ -13,7 +13,7 @@ import {example} from '../../modules/apis/index';
 const list = [
   '调试面板',
   'WebPage',
-  'Charbar(字母索引)',
+  '拍照/录像',
   'MoveView',
   'Search',
   'TabLayout',
@@ -40,7 +40,12 @@ class Home extends React.PureComponent {
         path = 'WebPage';
         break;
       case 2:
+        path = 'CameraPage';
+        break;
+      case 3:
         path = '';
+        break;
+      default:
         break;
     }
     if (path) {
@@ -48,7 +53,7 @@ class Home extends React.PureComponent {
         name: path,
         params: {item},
       });
-    }else {
+    } else {
       this.openPicker();
     }
   };

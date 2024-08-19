@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  TextInput,
+  Button,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -20,14 +22,19 @@ import Configs from '../../../config/index';
 let lastTime = 0;
 function PanelModel(props) {
   const navigation = useNavigation();
+
   const [visible, setVisible] = useState(false);
+  const [visibleH5, setVisibleH5] = useState(false);
   const [curEnv, setCurEnv] = useState('');
+  const [h5Path, setH5Path] = useState('http://');
   const envList = ['prod', 'uat', 'test', 'dev'];
 
   const list = [
-    {title: '调试H5', tag: 1, path: ''},
-    {title: '清除缓存', tag: 0, path: ''},
+    {tag: 1, title: '调试H5', path: ''},
+    {tag: 2, title: '清除缓存', path: ''},
   ];
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     setVisible(props.visible);
@@ -61,16 +68,66 @@ function PanelModel(props) {
     }
   }
 
+  // 跳转H5页面 
+  function gotoH5Page() {
+    if(!h5Path) {
+      return;
+    }
+    // 保存H5地址到本地存储
+    navigation.navigate('WebPage', {url: h5Path});
+    onBack();
+  }
+
+  // 调试H5
+  function onInputH5Path(e) {
+    const path = e.nativeEvent.text;
+    // console.log(path);
+    setH5Path(path);
+  }
+
   function renderItem({item, index}) {
-    return (
-      <TouchableOpacity
-        key={index}
-        style={styles.item}
-        activeOpacity={0.7}
-        onPress={() => onPress(item)}>
-        <Text style={styles.label}>{item.title}</Text>
-      </TouchableOpacity>
-    );
+    if (item.tag == 1) {
+      // 调试H5
+      return (
+        <>
+          <TouchableOpacity
+            key={index}
+            style={styles.item}
+            activeOpacity={0.7}
+            onPress={() => {
+              setVisibleH5(!visibleH5);
+            }}>
+            <Text style={styles.label}>{item.title}</Text>
+          </TouchableOpacity>
+          {visibleH5 ? (
+            <View style={styles.inputBox}>
+              <TextInput
+                style={styles.input}
+                multiline={true}
+                textAlignVertical="top"
+                numberOfLines={3}
+                onChange={onInputH5Path}
+                defaultValue={h5Path}
+                placeholder="调试地址"
+              />
+              <Button title="打开H5" onPress={gotoH5Page} />
+            </View>
+          ) : (
+            <></>
+          )}
+        </>
+      );
+    } else if (item.tag == 2) {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.item}
+          activeOpacity={0.7}
+          onPress={() => onPress(item)}>
+          <Text style={styles.label}>{item.title}</Text>
+        </TouchableOpacity>
+      );
+    }
   }
 
   // 环境切换
@@ -176,6 +233,21 @@ const styles = StyleSheet.create({
   env2: {
     fontSize: 16,
     color: '#232323',
+  },
+  inputBox: {
+    backgroundColor: 'white',
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+  },
+  input: {
+    minHeight: 40,
+    maxHeight: 120,
+    lineHeight: 24,
+    borderRadius: 6,
+    marginBottom: 8,
+    backgroundColor: '#f6f6f6',
+    color: '#232323',
+    fontSize: 16,
   },
 });
 export default PanelModel;
