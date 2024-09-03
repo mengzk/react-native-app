@@ -18,7 +18,7 @@ import WebView from 'react-native-webview';
 import {handlerWebMessage, parseWebEvent} from './bridge/index';
 import {Header, SharePop} from './component/index';
 
-import Images from '../../assets/imgs';
+import Images from '../../assets/imgs3';
 
 // 绑定 window.postMessage
 const injectedJavaScript = `window.postMessage = function(data) {window.ReactNativeWebView.postMessage(data);}`;

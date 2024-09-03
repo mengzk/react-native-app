@@ -34,7 +34,7 @@ class Home extends React.PureComponent {
 
     switch (index) {
       case 0:
-        path = '';
+        path = 'TestPage';
         break;
       case 1:
         path = 'WebPage';

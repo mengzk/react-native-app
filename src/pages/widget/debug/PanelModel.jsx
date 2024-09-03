@@ -32,6 +32,7 @@ function PanelModel(props) {
   const list = [
     {tag: 1, title: '调试H5', path: ''},
     {tag: 2, title: '清除缓存', path: ''},
+    {tag: 3, title: '调试页面', path: 'TestPage'},
   ];
 
   useEffect(() => {}, []);

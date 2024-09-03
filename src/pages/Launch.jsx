@@ -8,7 +8,7 @@ import React, {useEffect} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import Images from '../assets/imgs';
+import Images from '../assets/imgs3';
 import {initDeviceInfo} from '../config/constants';
 import {initLibs} from '../libs/index';
 
