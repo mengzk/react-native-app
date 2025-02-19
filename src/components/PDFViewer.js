@@ -19,7 +19,7 @@ import PDFThumbnailViewer from './PDFThumbnailViewer';
 function PDFViewer(props) {
   const [bookmarks, setBookmarks] = useState([]);
   const source = {
-    url: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
     cache: true,
   };
 
@@ -27,7 +27,7 @@ function PDFViewer(props) {
     // 获取PDF元数据
     const fetchBookmarks = async () => {
       const pdf = new Pdf();
-      await pdf.loadFile(url);
+      await pdf.loadFile(source.uri);
       const metadata = await pdf.getMetadata();
       setBookmarks(metadata.bookmarks || []);
     };
@@ -36,13 +36,14 @@ function PDFViewer(props) {
   }, []);
 
   const renderBookmark = ({item}) => (
-    <TouchableOpacity onPress={() => pdf.setPage(item.pageNumber)}>
+    // <TouchableOpacity onPress={() => pdf.setPage(item.pageNumber)}>
+    <TouchableOpacity>
       <Text style={styles.bookmark}>{item.title}</Text>
     </TouchableOpacity>
   );
 
   const handleThumbnailPress = page => {
-    pdf.setPage(page);
+    // pdf.setPage(page);
   };
 
   return (
