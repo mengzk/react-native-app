@@ -2,6 +2,7 @@
 
 注: !!! 项目 库(package.json -> dependencies) 每3个月要主动升级一次 !!!
 
+暂时不是升级到 react native 0.77.1 先用 0.74
 
 ## 库
 
@@ -13,7 +14,7 @@
 - 分享: react-native-share
 - 权限: react-native-permissions
 - 视频: react-native-video
-- 动画: react-native-animatable
+- 动画: react-native-animatable / react-native-reanimated
 
 
 ## 项目目录
