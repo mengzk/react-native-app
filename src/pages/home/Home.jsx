@@ -5,7 +5,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, PermissionsAndroid} from 'react-native';
 
 import {Header, CompatButton, ListView} from '../../components/index';
 import {example} from '../../modules/apis/index';
@@ -18,7 +18,12 @@ const list = [
   'Search',
   'TabLayout',
   'SafeFooter',
+  'PDFViewer',
 ];
+const PERMISSIONS = [
+  PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+]
 const rightBtns = [{name: '菜单', onPress: () => {}}];
 
 class Home extends React.PureComponent {
@@ -26,8 +31,19 @@ class Home extends React.PureComponent {
     super(props);
     this.state = {};
   }
+   
+  componentDidMount() {
+    this.requestCameraPermission();
+  }
 
-  componentDidMount() {}
+  requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.requestMultiple(PERMISSIONS);
+      console.log('---> granted', granted);
+    } catch (err) {
+      console.warn(err);
+    }
+  }
 
   onItemPress = (item, index) => {
     let path = '';
@@ -44,6 +60,9 @@ class Home extends React.PureComponent {
         break;
       case 3:
         path = '';
+        break;
+      case 7:
+        path = 'PDFPage';
         break;
       default:
         break;
