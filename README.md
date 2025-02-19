@@ -6,13 +6,14 @@
 ## 库
 
 - 存储: @react-native-async-storage/async-storage (除非有性能问题,否则不要体会)
-- 相机: react-native-camera
+- 相机: react-native-camera/react-native-vision-camera
 - 定位: react-native-amap-geolocation
 - 蓝牙: 
 - 设备: react-native-device-info
 - 分享: react-native-share
 - 权限: react-native-permissions
 - 视频: react-native-video
+- 动画: react-native-animatable
 
 
 ## 项目目录

@@ -15,17 +15,17 @@ import {
 } from 'react-native';
 import {generateThumbnail} from 'react-native-pdf-thumbnail';
 
-const PDFThumbnailViewer = ({uri, onThumbnailPress}) => {
+const PDFThumbnailViewer = ({url, onThumbnailPress}) => {
   const [thumbnails, setThumbnails] = useState([]);
 
   useEffect(() => {
     const fetchThumbnails = async () => {
-      const result = await generateThumbnail(uri, 0); // 生成第一页的缩略图
+      const result = await generateThumbnail(url, 0); // 生成第一页的缩略图
       setThumbnails([result]);
     };
 
     fetchThumbnails();
-  }, [uri]);
+  }, [url]);
 
   const renderThumbnail = ({item}) => (
     <TouchableOpacity onPress={() => onThumbnailPress(item.page)}>

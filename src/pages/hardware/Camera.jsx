@@ -11,10 +11,10 @@
 
 import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, DeviceEventEmitter } from 'react-native';
-import {Camera, useCameraDevice} from 'react-native-vision-camera';
+// import {Camera, useCameraDevice} from 'react-native-vision-camera';
 
 function CameraPage(props) {
-  const device = useCameraDevice('back');
+  // const device = useCameraDevice('back');
 
   const [visible, setVisible] = useState(false);
 
@@ -31,7 +31,7 @@ function CameraPage(props) {
 
   return (
     <View style={styles.page}>
-      <Camera style={styles.camera} device={device} isActive={true} />
+      {/* <Camera style={styles.camera} device={device} isActive={true} /> */}
     </View>
   );
 };

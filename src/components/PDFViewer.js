@@ -16,21 +16,24 @@ import {
 import Pdf from 'react-native-pdf';
 import PDFThumbnailViewer from './PDFThumbnailViewer';
 
-const PDFViewer = ({uri}) => {
+function PDFViewer(props) {
   const [bookmarks, setBookmarks] = useState([]);
-  const source = {uri, cache: true};
+  const source = {
+    url: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+    cache: true,
+  };
 
   useEffect(() => {
     // 获取PDF元数据
     const fetchBookmarks = async () => {
       const pdf = new Pdf();
-      await pdf.loadFile(uri);
+      await pdf.loadFile(url);
       const metadata = await pdf.getMetadata();
       setBookmarks(metadata.bookmarks || []);
     };
 
     // fetchBookmarks();
-  }, [uri]);
+  }, []);
 
   const renderBookmark = ({item}) => (
     <TouchableOpacity onPress={() => pdf.setPage(item.pageNumber)}>
@@ -66,10 +69,10 @@ const PDFViewer = ({uri}) => {
         keyExtractor={(item, index) => index.toString()}
         style={styles.bookmarkList}
       /> */}
-      {/* <PDFThumbnailViewer uri={uri} onThumbnailPress={handleThumbnailPress} /> */}
+      {/* <PDFThumbnailViewer url={url} onThumbnailPress={handleThumbnailPress} /> */}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
