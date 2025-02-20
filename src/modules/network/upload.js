@@ -31,7 +31,7 @@ export function uploadImgs(files = []) {
       })
         .then(response => response.json())
         .then(res => {
-          console.log('uploadImg resolve ', res);
+          console.log('---> uploadImg resolve ', res);
           // console.log(res);
           if (res) {
             if (res.success) {
@@ -75,7 +75,7 @@ export function uploadImg(file = '') {
     })
       .then(response => response.json())
       .then(res => {
-        console.log('uploadImg resolve ', res);
+        console.log('---> uploadImg resolve ', res);
         // console.log(res);
         if (res) {
           if (res.success) {
@@ -89,68 +89,87 @@ export function uploadImg(file = '') {
         }
       })
       .catch(err => {
-        console.log('uploadImg Error ', err);
+        console.log('---> uploadImg Error ', err);
         resolve({code: -1002, data: null});
       });
   });
 }
 
 // 文件下载 注：此处未做权限判断
-export async function download(url, name, path) {
-  console.log(url, name, path);
+export async function download(fileUrl, fileName, folder) {
+  if (!fileUrl) {
+    console.warn('---> download 下载地址为空');
+    return {code: -1, data: null, msg: '下载地址为空'};
+  }
 
-  let savePath = '';
+  const lastPath = fileUrl.lastIndexOf('/');
+  const lastPoint = fileUrl.lastIndexOf('.');
+  if (!fileName) {
+    if (lastPoint < 0) {
+      console.warn('---> download 文件名为空');
+      return {code: -1, data: null, msg: '文件名为空'};
+    } else {
+      fileName = fileUrl.substring(lastPath + 1);
+    }
+  }
+  if (!fileName.includes('.')) {
+    console.warn('---> download 文件后缀为空');
+    return {code: -1, data: null, msg: '文件后缀为空'};
+  }
+
+  let savePath = ''; // 保存路径
+  let fileType = ''; // 文件后缀
+
   if (isIos) {
     savePath = `${RNFS.DocumentDirectoryPath}`;
   } else {
-    savePath = `${RNFS.DownloadDirectoryPath}/${path || 'BTHome'}`;
+    savePath = `${RNFS.DownloadDirectoryPath}/${folder || 'Store'}`;
   }
   const exists = await RNFS.exists(savePath);
   if (!exists) {
     RNFS.mkdir(savePath);
   }
-  let fileType = '';
-  if (url && url.includes('/')) {
-    const lastStr = url.substring(url.lastIndexOf('/') + 1);
-    if (lastStr.includes('.') && !name.includes('.')) {
+  if (fileUrl && fileUrl.includes('/')) {
+    const lastStr = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+    if (lastStr.includes('.') && !fileName.includes('.')) {
       fileType = lastStr.substring(lastStr.lastIndexOf('.'));
     }
     // console.log('-------------> fileType', fileType);
   }
 
-  return new Promise(resolve => {
-    const downPath = `${savePath}/${name}${fileType}`;
-    const options = {
-      fromUrl: url,
-      toFile: downPath,
-      background: true,
-      // headers: { 'cookie': 'info.token' || '' },
-      begin: res => {
-        console.log('=======> 下载文件开始 begin');
-        console.log(res.contentLength);
-      },
-      progress: res => {},
-    };
-    const ret = RNFS.downloadFile(options);
-    ret.promise
-      .then(res => {
-        if (isIos) {
-          // Toast.showShortCenter('导出文件成功，请在“文件app”中查看')
-        } else {
-          let alert = downPath;
-          if (downPath.indexOf('0') > -1) {
-            alert = downPath.split('0/')[1];
-          }
-          // Toast.showShortCenter('文件下载成功!  路径：' + alert);
+  const downPath = `${savePath}/${fileName}${fileType}`;
+  const options = {
+    fromUrl: fileUrl,
+    toFile: downPath,
+    background: true,
+    // headers: { 'cookie': 'info.token' || '' },
+    begin: res => {
+      console.log('---> 下载文件开始 begin');
+      console.log(res.contentLength);
+    },
+    progress: res => {},
+  };
+  // 下载文件
+  const ret = RNFS.downloadFile(options);
+
+  return ret.promise
+    .then(res => {
+      console.log('---> 下载文件成功');
+      if (isIos) {
+        // Toast.showShortCenter('导出文件成功，请在“文件app”中查看')
+      } else {
+        let alert = downPath;
+        if (downPath.indexOf('0') > -1) {
+          alert = downPath.split('0/')[1];
         }
-        console.log('=======> 下载文件成功 success');
-        console.log(res, downPath);
-        resolve({ code: res.statusCode, data: downPath,  msg: '下载成功' });
-      })
-      .catch(err => {
-        console.log('=======> 下载文件失败 catch');
-        console.log(err);
-        resolve({ status: -1, data: null, msg: '下载失败'});
-      });
-  });
+        // Toast.showShortCenter('文件下载成功!  路径：' + alert);
+      }
+      console.log(res, downPath);
+      return {code: res.statusCode, data: downPath, msg: '下载成功'};
+    })
+    .catch(err => {
+      console.log('---> catch 下载文件失败');
+      console.log(err);
+      return {code: -1, data: null, msg: '下载失败'};
+    });
 }
