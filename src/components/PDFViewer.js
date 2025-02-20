@@ -16,12 +16,10 @@ import {
 } from 'react-native';
 import Pdf from 'react-native-pdf';
 
-// import {download} from './down';
+import {fileDownload} from '../modules/network/upload';
 
 const {width, height} = Dimensions.get('window');
 const isIOS = Platform.OS === 'ios';
-const pdfUrl =
-  'https://dhstat.com/prod/images/pdf/2023Yearbook.pdf';
 
 function PDFViewer(props) {
   const pdfRef = useRef(null);
@@ -32,32 +30,38 @@ function PDFViewer(props) {
   const [curNum, setCurNum] = useState(0);
   const [thumbs, setThumbs] = useState([]);
   const [source, setSource] = useState({
-    uri: 'https://dhstatic.bthome.com/prod/images/bigscreen/pdf/2023Yearbook.pdf',
+    uri: '',
     cache: true,
     expiration: 1000000,
   });
 
   useEffect(() => {
-    downloadPDF();
+    const url = props.url;
+    if (url) {
+      downloadPDF(url);
+    } else {
+      setCurNum(-1);
+      console.log('---> PDFViewer: url is empty');
+    }
   }, []);
 
-  function downloadPDF() {
+  function downloadPDF(pdfUrl) {
     if (isIOS) {
       setSource({
         uri: pdfUrl,
         cache: true,
         expiration: 1000 * 60 * 60 * 24,
       });
-    }else {
-      // download(pdfUrl, '2023Yearbook.pdf').then(res => {
-      //   if (res.code == 200 && res.data) {
-      //     setSource({
-      //       uri: res.data,
-      //       cache: true,
-      //       expiration: 1000 * 60 * 60 * 24,
-      //     });
-      //   }
-      // });
+    } else {
+      fileDownload(pdfUrl).then(res => {
+        if ((res.code == 200 || res.code == 201 || res.code == 0) && res.data) {
+          setSource({
+            uri: res.data,
+            cache: true,
+            expiration: 1000 * 60 * 60 * 24,
+          });
+        }
+      });
     }
   }
 
@@ -65,7 +69,7 @@ function PDFViewer(props) {
   const renderThumb = ({item}) => {
     // console.log('---> item', item);
     const boxStyle = curNum == item ? styles.menuView2 : styles.menuView;
-    return(
+    return (
       <TouchableOpacity
         style={boxStyle}
         onPress={() => {
@@ -76,18 +80,20 @@ function PDFViewer(props) {
         }}>
         <Text style={styles.menu}>{item}</Text>
       </TouchableOpacity>
-    )
+    );
   };
 
   // 浮动按钮
   function floatView() {
-    if(curNum < 1) {
-      return <></>
-    }else {
-      return(
+    if (curNum < 1) {
+      return <></>;
+    } else {
+      return (
         <>
           <View style={styles.floatNum}>
-            <Text style={styles.floatText}>{curNum}/{total.current}页</Text>
+            <Text style={styles.floatText}>
+              {curNum}/{total.current}页
+            </Text>
           </View>
           <TouchableOpacity
             style={showMenu ? styles.floatMenu2 : styles.floatMenu}
@@ -96,81 +102,82 @@ function PDFViewer(props) {
             <Text style={styles.floatText}>目录</Text>
           </TouchableOpacity>
         </>
-      )
+      );
     }
   }
 
   function progressView(progress) {
-    const value = Math.round(progress*100);
-    return(
+    const value = Math.round(progress * 100);
+    return (
       <View style={styles.progressBox}>
         <Text style={styles.progressText}>{value}%</Text>
-      </View>
-    )
-  }
-
-  if (!source.uri) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.empty}>
-          <Text>加载中...</Text>
-        </View>
       </View>
     );
   }
 
-  return (
-    <View style={styles.container}>
-      {showMenu ? (
-        <FlatList
-          ref={flatListRef}
-          style={styles.menuList}
-          data={thumbs}
-          renderItem={renderThumb}
-          keyExtractor={(_, index) => index.toString()}
+  if (!source.uri) {
+    return (
+      <View style={styles.empty}>
+        <Text style={styles.emptyText}>{curNum < 0 ? 'PDF加载失败' : '加载中...'}</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        {showMenu ? (
+          <FlatList
+            ref={flatListRef}
+            style={styles.menuList}
+            data={thumbs}
+            renderItem={renderThumb}
+            keyExtractor={(_, index) => index.toString()}
+          />
+        ) : (
+          <></>
+        )}
+        <Pdf
+          style={showMenu ? styles.pdf : styles.pdfFull}
+          ref={pdfRef}
+          source={source}
+          fitPolicy={0}
+          scale={isIOS ? 0.5 : 1} // 设置缩放比例
+          minScale={0.5} // 设置最小缩放比例
+          maxScale={3.0} // 设置最大缩放比例
+          renderActivityIndicator={progressView}
+          onLoadComplete={(numberOfPages, filePath) => {
+            console.log(`---> size: ${numberOfPages}, path: ${filePath}`);
+            total.current = numberOfPages;
+            const thumbs = Array.from(
+              {length: numberOfPages},
+              (_, index) => index + 1,
+            );
+            setThumbs(thumbs);
+          }}
+          onPageChanged={(page, numberOfPages) => {
+            setCurNum(page);
+            if(total.current < 1) {
+              total.current = numberOfPages;
+            }
+            const flat = flatListRef.current;
+            if (flat && page > 0) {
+              flat.scrollToIndex({
+                animated: true,
+                index: page - 1,
+              });
+            }
+            // console.log(`---> current: ${page}, total: ${numberOfPages}`);
+          }}
+          onPressLink={uri => {
+            console.log(`---> press link: ${uri}`);
+          }}
+          onError={err => {
+            console.log('---> err', err);
+          }}
         />
-      ) : (
-        <></>
-      )}
-      <Pdf
-        style={showMenu ? styles.pdf : styles.pdfFull}
-        ref={pdfRef}
-        source={source}
-        fitPolicy={0}
-        // scale={1.0} // 设置缩放比例
-        minScale={0.5} // 设置最小缩放比例
-        maxScale={3.0} // 设置最大缩放比例
-        renderActivityIndicator={progressView}
-        onLoadComplete={(numberOfPages, filePath) => {
-          console.log(`---> size: ${numberOfPages}, path: ${filePath}`);
-          const thumbs = Array.from(
-            {length: numberOfPages},
-            (_, index) => index + 1,
-          );
-          setThumbs(thumbs);
-        }}
-        onPageChanged={(page, numberOfPages) => {
-          setCurNum(page);
-          total.current = numberOfPages;
-          const flat = flatListRef.current;
-          if (flat && page > 0) {
-            flat.scrollToIndex({
-              animated: true,
-              index: page - 1,
-            });
-          }
-          // console.log(`---> current: ${page}, total: ${numberOfPages}`);
-        }}
-        onPressLink={(uri) => {
-          console.log(`---> press link: ${uri}`);
-        }}
-        onError={err => {
-          console.log('---> err', err);
-        }}
-      />
-      {floatView()}
-    </View>
-  );
+        {floatView()}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -183,6 +190,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#5d5d5d',
+  },
+  emptyText: {
+    color: '#676767',
+    fontSize: 20,
   },
   pdf: {
     width: width - 152,

@@ -70,7 +70,7 @@ class Home extends React.PureComponent {
     if (path) {
       this.props.navigation.navigate({
         name: path,
-        params: {item},
+        params: {title: 'PDF', url: 'https://dhstatic.bthome.com/prod/images/bigscreen/pdf/2023Yearbook.pdf'},
       });
     } else {
       this.openPicker();
