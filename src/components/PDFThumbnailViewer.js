@@ -13,15 +13,15 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {generateThumbnail} from 'react-native-pdf-thumbnail';
+import PdfThumbnail from 'react-native-pdf-thumbnail';
 
 const PDFThumbnailViewer = ({url, onThumbnailPress}) => {
   const [thumbnails, setThumbnails] = useState([]);
 
   useEffect(() => {
     const fetchThumbnails = async () => {
-      const result = await generateThumbnail(url, 0); // 生成第一页的缩略图
-      setThumbnails([result]);
+      const results = await PdfThumbnail.generateAllPages(url, 10);
+      setThumbnails(results);
     };
 
     fetchThumbnails();
