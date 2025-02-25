@@ -9,6 +9,7 @@ import {View, Text, StyleSheet, PermissionsAndroid} from 'react-native';
 
 import {Header, CompatButton, ListView} from '../../components/index';
 import {example} from '../../modules/apis/index';
+import {getSizeFromCache, deleteAllCache} from '../../utils/CacheFile';
 
 const list = [
   '调试面板',
@@ -19,6 +20,8 @@ const list = [
   'TabLayout',
   'SafeFooter',
   'PDFViewer',
+  'CacheClear',
+  'CacheSize',
 ];
 const PERMISSIONS = [
   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -64,6 +67,14 @@ class Home extends React.PureComponent {
       case 7:
         path = 'PDFPage';
         break;
+      case 8:
+        deleteAllCache();
+        break;
+      case 9:
+        getSizeFromCache().then((size) => {
+          console.log('---> size', size);
+        });
+        break;
       default:
         break;
     }
@@ -73,7 +84,7 @@ class Home extends React.PureComponent {
         params: {title: 'PDF', url: 'https://dhstatic.bthome.com/prod/images/bigscreen/pdf/2023Yearbook.pdf'},
       });
     } else {
-      this.openPicker();
+      // this.openPicker();
     }
   };
 

@@ -200,9 +200,10 @@ export async function fileDownload(fileUrl, fileName, folder) {
   let fileType = ''; // 文件后缀
 
   if (isIos) {
-    savePath = `${RNFS.DocumentDirectoryPath}`;
+    savePath = `${RNFS.DocumentDirectoryPath}/cache`;
   } else {
-    savePath = `${RNFS.DownloadDirectoryPath}/${folder || 'Store'}`;
+    const folder2 = folder ? `/${folder}` : '';
+    savePath = `${RNFS.DocumentDirectoryPath}/cache${folder2}`;
   }
   const exists = await RNFS.exists(savePath);
   if (!exists) {
@@ -217,14 +218,19 @@ export async function fileDownload(fileUrl, fileName, folder) {
   }
 
   const downPath = `${savePath}/${fileName}${fileType}`;
+
   // 如何文件已存在，则直接返回
   const isExist = await RNFS.exists(downPath);
   if (isExist) {
     console.log('---> 文件已存在');
-    return {code: 200, data: downPath, msg: '文件已存在'};
+    if(isIos) {
+      return {code: 200, data: downPath, msg: '文件已存在'};
+    }else {
+      // return {code: 200, data: `file:///${downPath}`, msg: '文件已存在'};
+      return {code: 200, data: downPath, msg: '文件已存在'};
+    }
   }
 
-  // 下载配置
   const options = {
     fromUrl: fileUrl,
     toFile: downPath,
@@ -242,17 +248,18 @@ export async function fileDownload(fileUrl, fileName, folder) {
   return ret.promise
     .then(res => {
       console.log('---> 下载文件成功');
+      console.log(res, downPath);
       if (isIos) {
         // Toast.showShortCenter('导出文件成功，请在“文件app”中查看')
+        return {code: res.statusCode, data: downPath, msg: '文件已存在'};
       } else {
         let alert = downPath;
         if (downPath.indexOf('0') > -1) {
           alert = downPath.split('0/')[1];
         }
         // Toast.showShortCenter('文件下载成功!  路径：' + alert);
+        return {code: res.statusCode, data: downPath, msg: '下载成功'};
       }
-      console.log(res, downPath);
-      return {code: res.statusCode, data: downPath, msg: '下载成功'};
     })
     .catch(err => {
       console.log('---> catch 下载文件失败');
