@@ -126,7 +126,7 @@ function PDFViewer(props) {
       <View style={styles.container}>
         {showMenu ? (
           <FlatList
-            ref={flatListRef}
+            // ref={flatListRef}
             style={styles.menuList}
             data={thumbs}
             renderItem={renderThumb}
