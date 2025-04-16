@@ -37,7 +37,8 @@ export default class WebPage extends PureComponent {
       showShare: false,
       inited: false,
       title: '',
-      url: 'https://dhstatic.bthome.com/appstore/test/landingpageStatic/index.html#/spatialCase/case?fromPage=pad', // h5项目地址
+      // url: 'https://dhstatic.bthome.com/appstore/test/landingpageStatic/index.html#/spatialCase/case?fromPage=pad', // h5项目地址
+      url: 'https://192.168.242.237:8087/contract/edit?code=PG2024052100015&sourceType=2', // h5项目地址
       curUrl: '', // 当前网站地址
       headerConfig: {},
       shareData: {title: '', desc: '', image: ''},
