@@ -25,6 +25,7 @@ function getRoute(route) {
 
 // 初始化配置 -useEffect 会加载两次
 Configs.init();
+// 
 const App = () => {
   return (
     <NavigationContainer
